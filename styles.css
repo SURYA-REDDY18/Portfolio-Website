@@ -156,6 +156,22 @@ canvas {
     background-color: #ffc107;
 }
 
+/* Profile Image Styling */
+.profile-image {
+    display: flex;
+    justify-content: center; /* Center the image */
+    margin-bottom: 20px; /* Space below the image */
+}
+
+.profile-image img {
+    width: 150px; /* Size of the image */
+    height: 150px;
+    border-radius: 50%; /* Make the image circular */
+    object-fit: cover; /* Ensure the image fits within the circle */
+    border: 3px solid white; /* Optional: white border around the image */
+}
+
+
 /* Typing effect */
 #typing-effect {
     font-size: 1.5rem;
@@ -166,6 +182,46 @@ canvas {
     overflow: hidden;
     display: inline-block;
     margin-left: 5px;
+}
+
+/* Article (into/an) effect */
+#article-effect {
+    font-size: 1.5rem;
+    color: white; /* White color for the articles */
+    font-weight: bold;
+    white-space: nowrap;
+    margin-left: 5px; /* Ensure space between "I am" and article */
+}
+
+/* Role effect */
+#role-effect {
+    font-size: 1.5rem;
+    color: #ffdd57; /* Gold color for the dynamic text (role only) */
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    border-right: 2px solid white; /* Blinking cursor */
+    margin-left: 5px; /* Ensure space between article and role */
+}
+
+
+/* Social Icons Section */
+.social-icons {
+    margin-top: 20px; /* Add some space above the icons */
+    display: flex;
+    justify-content: center; /* Center the icons */
+    gap: 20px; /* Space between icons */
+}
+
+.social-icons a {
+    color: white; /* White color for the icons */
+    font-size: 2rem; /* Size of the icons */
+    transition: color 0.3s ease; /* Smooth transition on hover */
+}
+
+.social-icons a:hover {
+    color: #ffdd57; /* Change color to gold on hover */
 }
 
 
