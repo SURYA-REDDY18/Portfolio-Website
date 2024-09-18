@@ -188,7 +188,6 @@ canvas {
 #article-effect {
     font-size: 1.5rem;
     color: white; /* White color for the articles */
-    font-weight: bold;
     white-space: nowrap;
     margin-left: 5px; /* Ensure space between "I am" and article */
 }
@@ -239,6 +238,56 @@ canvas {
 
 .resume-btn:hover {
     background-color: #ffc107;
+}
+
+/* Skills Section */
+.skills {
+    padding: 50px 0;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.skills-category {
+    margin-bottom: 40px;
+}
+
+.skills-category h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.skills-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.skill-item {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.skill-item img {
+    width: 60px; /* Adjust the logo size */
+    height: 60px;
+    object-fit: contain; /* Make sure the image fits without distortion */
+    margin-bottom: 10px;
+}
+
+.skill-item p {
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
 }
 
 
