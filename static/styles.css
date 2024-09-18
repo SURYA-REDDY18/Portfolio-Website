@@ -241,45 +241,45 @@ canvas {
 }
 
 /* Skills Section */
+/* Updated Skills Section */
 .skills {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensures it occupies full screen height */
     padding: 50px 0;
     background-color: #f4f4f4;
     color: #333;
     text-align: center;
 }
 
-.section-title {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-}
-
-.skills-category {
-    margin-bottom: 40px;
-}
-
-.skills-category h3 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #333;
-}
-
 .skills-grid {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px; /* Space between skill items */
+    padding: 0 350px; /* Remove padding that was pushing content */
 }
 
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+
 .skill-item {
-    width: 120px;
+    width: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 60px;
 }
 
 .skill-item img {
-    width: 60px; /* Adjust the logo size */
-    height: 60px;
+    width: 100px; /* Adjust the logo size */
+    height: 100px;
     object-fit: contain; /* Make sure the image fits without distortion */
     margin-bottom: 10px;
 }
@@ -290,6 +290,9 @@ canvas {
     text-align: center;
 }
 
+.skill-item:hover {
+    transform: scale(1.2); /* Scale the logo up by 20% on hover */
+}
 
 
 @keyframes blink {
