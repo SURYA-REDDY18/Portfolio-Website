@@ -319,6 +319,100 @@ canvas {
     animation: blink 1s step-end infinite;
 }
 
+/* Education Section */
+.education {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 60px 0;
+    color: #333;
+    text-align: center;
+}
+
+.education .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.education .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #333;
+}
+
+.education-details {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.education-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.education-content {
+    display: flex;
+    align-items: center; /* Align logo and text vertically */
+    gap: 20px; /* Space between the logo and text */
+}
+
+.institution-logo-uic img,
+.institution-logo-amrita img {
+    max-width: 150px; /* Set maximum width for logos */
+    height: auto;
+}
+
+.education-text {
+    flex: 1;
+}
+
+.education-text h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.education-text p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.education-text ul {
+    list-style-type: disc;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.education-text ul li {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .education-content {
+        flex-direction: column; /* Stack logo and text on smaller screens */
+        align-items: flex-start;
+    }
+
+    .institution-logo-uic img,
+    .institution-logo-amrita img {
+        max-width: 60px; /* Smaller logo size on mobile */
+    }
+}
+
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .nav-links {
