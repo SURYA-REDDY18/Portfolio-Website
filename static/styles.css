@@ -81,6 +81,17 @@ header {
     transform-origin: left;
 }
 
+/* Navbar active state */
+.nav-links li a.active {
+    color: #ffdd57; /* Change the color for the active section */
+}
+
+.nav-links li a.active::after {
+    transform: scaleX(1); /* Show underline */
+    transform-origin: left;
+}
+
+
 /* Hamburger Menu */
 .hamburger {
     display: none;
