@@ -418,6 +418,7 @@ canvas {
     padding: 60px 0;
     color: #333;
     text-align: center;
+    height: 100vh;
 }
 
 .experience .container {
@@ -503,6 +504,133 @@ canvas {
 .timeline-item:nth-child(odd) .timeline-date {
     text-align: left;
 }
+
+/* Contact Section */
+.contact {
+    background-color: #f1f1f1;
+    padding: 60px 0;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex; /* Flexbox for vertical centering */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contact .container {
+    width: 100%; /* Ensure it takes up full width */
+    max-width: 800px; /* Maximum width for the form */
+    margin: 0 auto;
+    padding: 0 20px; /* Add some padding for mobile viewports */
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Contact Form */
+.contact-form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.contact-form i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-25%);
+    font-size: 1.2rem;
+    color: #888;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 15px 45px 15px 45px; /* Adjusted padding to make space for icons */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fafafa;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #999;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Aligning the Icon in Textarea */
+.contact-form .form-group textarea {
+    padding-left: 50px; /* Increase left padding for the textarea icon */
+}
+
+.form-group i {
+    top: 20px; /* Properly align the icon in the textarea */
+}
+
+.submit-btn {
+    background-color: #121a29; /* Dark navy color */
+    color: #ffffff;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px; /* Rounded button */
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Centers text and icon horizontally */
+    position: relative;
+    gap: 10px; /* Adds space between text and icon */
+}
+
+.submit-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Form Focus Effect */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #6c63ff;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(108, 99, 255, 0.4); /* Focus effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 20px;
+    }
+
+    .form-group i {
+        left: 10px; /* Adjust icon positioning on mobile */
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding-left: 40px;
+    }
+}
+
 
 /* Footer styles */
 footer {
