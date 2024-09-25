@@ -357,6 +357,13 @@ canvas {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add hover effect to the education cards */
+.education-item:hover {
+    transform: translateY(-10px); /* Lift the card slightly */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
 }
 
 .education-content {
@@ -412,19 +419,24 @@ canvas {
     }
 }
 
+
 /* Experience Section */
 .experience {
     background-color: #f9f9f9;
     padding: 60px 0;
     color: #333;
     text-align: center;
-    height: 100vh;
+    min-height: 100vh; /* Ensures the experience section occupies the full height of the viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
 }
 
 .experience .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    flex-grow: 1; /* Ensures the container stretches to fill available space */
 }
 
 .experience .section-title {
@@ -435,75 +447,206 @@ canvas {
     color: #333;
 }
 
-/* Timeline */
-.timeline {
+
+/* The actual timeline (the vertical ruler) */
+.exp-timeline {
     position: relative;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px 0;
-    width: 90%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
 }
 
-/* Timeline Item */
-.timeline-item {
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 20px 0;
-}
-
-/* Timeline Line */
-.timeline-item::before {
+/* The vertical ruler */
+.exp-timeline::after {
     content: '';
     position: absolute;
+    width: 6px;
+    background-color: #ccc;
     top: 0;
     bottom: 0;
     left: 50%;
-    width: 2px;
-    background-color: #ccc;
+    margin-left: -3px;
 }
 
-/* Timeline Content */
-.timeline-content {
-    background-color: #fff;
-    padding: 20px;
+/* Container around content */
+.exp-container {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+/* The circles on the timeline with icons */
+.exp-container::after {
+    content: '\f0b1'; /* Font Awesome briefcase icon */
+    font-family: 'Font Awesome 5 Free'; /* Use Font Awesome for the icon */
+    font-weight: 900; /* Ensure the icon is bold */
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -17px;
+    background-color: white;
+    border: 4px solid #FF9F55;
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF9F55; /* Icon color */
+    font-size: 12px; /* Adjust the icon size */
+}
+
+/* Place the container to the left */
+.exp-left {
+    left: 0;
+}
+
+/* Place the container to the right */
+.exp-right {
+    left: 50%;
+}
+
+/* Add arrows to the left container (pointing right) */
+.exp-left::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: 30px;
+    border: medium solid white;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent white;
+}
+
+/* Add arrows to the right container (pointing left) */
+.exp-right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: 30px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+}
+
+/* Fix the circle for containers on the right side */
+.exp-right::after {
+    left: -16px;
+}
+
+/* The actual content */
+.exp-content {
+    padding: 20px 30px;
+    background-color: white;
+    position: relative;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 45%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
     text-align: left;
-    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.timeline-content h3 {
+/* Date styling */
+/* Add subtle scaling and shadow effect on hover */
+.exp-content:hover {
+    transform: translateY(-10px); /* Lift the card slightly */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+/* Date styling */
+.exp-date {
+    position: absolute;
+    top: 25px;
+    font-size: 14px;
+    color: #888;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Card heading */
+.exp-content h3 {
     font-size: 1.8rem;
+    font-weight: bold;
     margin-bottom: 10px;
+    color: #333;
+    letter-spacing: 1px; /* Add spacing between letters */
+    text-transform: uppercase; /* Make heading uppercase for style */
+    border-left: 5px solid #ffdd57; /* Add left border for style */
+    padding-left: 15px;
+    transition: color 0.3s ease;
 }
 
-.timeline-content p {
-    font-size: 1rem;
-    color: #555;
+/* Company name */
+.exp-content p strong {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: grey; /* Highlight company name with accent color */
+    display: block;
+    margin-bottom: 5px;
+    text-transform: capitalize; /* Capitalize company name */
 }
 
-/* Timeline Date */
-.timeline-date {
+/* Job description paragraph */
+.exp-content p {
     font-size: 1rem;
-    color: #777;
-    width: 45%;
+    line-height: 1.6;
+    color: #555; /* Softer color for paragraph */
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+
+/* Dates for left-side containers */
+.exp-left .exp-date {
+    left: 108%; /* Move the date to the left of the timeline */
     text-align: right;
-    z-index: 2;
 }
 
-/* Align elements on opposite sides */
-.timeline-item:nth-child(even) .timeline-content {
-    margin-left: auto;
-}
-
-.timeline-item:nth-child(odd) .timeline-date {
+/* Dates for right-side containers */
+.exp-right .exp-date {
+    right: 108%; /* Move the date to the right of the timeline */
     text-align: left;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .exp-timeline::after {
+        left: 50%;
+    }
+
+    .exp-container {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 70px;
+    }
+
+    .exp-left::before, .exp-right::before {
+        display: none;
+    }
+
+    .exp-left, .exp-right {
+        left: 0;
+    }
+
+    .exp-right::after {
+        left: -15px;
+    }
+
+    /* Align dates to the top in responsive */
+    .exp-left .exp-date,
+    .exp-right .exp-date {
+        left: 0;
+        right: 0;
+        text-align: center;
+        top: -30px;
+    }
+}
+
+
 
 /* Contact Section */
 .contact {
