@@ -26,3 +26,30 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+// Get the go-to-top button
+const goToTopBtn = document.getElementById("goToTopBtn");
+
+// Show or hide the button when scrolling
+window.onscroll = function() {
+    toggleGoToTopBtn();
+};
+
+function toggleGoToTopBtn() {
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        goToTopBtn.classList.add("show");
+    } else {
+        goToTopBtn.classList.remove("show");
+    }
+}
+
+// Smooth scroll to top when the button is clicked
+goToTopBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+
