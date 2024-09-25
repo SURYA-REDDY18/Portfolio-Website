@@ -680,7 +680,7 @@ canvas {
 .contact-form {
     background-color: #ffffff;
     padding: 40px;
-    border-radius: 10px;
+    border-radius: 15px; /* Softer edges for modern look */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: relative;
 }
@@ -688,17 +688,18 @@ canvas {
 .form-group {
     position: relative;
     margin-bottom: 30px;
+    transition: transform 0.3s ease;
 }
 
 .contact-form i {
     position: absolute;
-    top: 50%;
+    top: 15px;
     left: 15px;
-    transform: translateY(-25%);
     font-size: 1.2rem;
     color: #888;
 }
 
+/* Input fields styling */
 .contact-form input,
 .contact-form textarea {
     width: 100%;
@@ -708,28 +709,38 @@ canvas {
     font-size: 1rem;
     color: #333;
     background-color: #fafafa;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
+/* Placeholder styles */
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
     color: #999;
 }
 
+/* Textarea */
 .contact-form textarea {
     resize: vertical;
     font-family: 'Poppins', sans-serif;
+    height: 150px; /* Fixed height for better UX */
 }
 
-/* Aligning the Icon in Textarea */
-.contact-form .form-group textarea {
-    padding-left: 50px; /* Increase left padding for the textarea icon */
+/* Hover effect on input fields */
+.contact-form input:hover,
+.contact-form textarea:hover {
+    background-color: #fff;
+    border-color: #0a2342;
 }
 
-.form-group i {
-    top: 20px; /* Properly align the icon in the textarea */
+/* Focus effect on input fields */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #ffdd57;
+    box-shadow: 0 0 5px rgba(255, 221, 87, 0.4); /* Slight glow effect */
+    outline: none; /* Remove default outline */
 }
 
+/* Submit button styling */
 .submit-btn {
     background-color: #121a29; /* Dark navy color */
     color: #ffffff;
@@ -744,10 +755,13 @@ canvas {
     justify-content: center; /* Centers text and icon horizontally */
     position: relative;
     gap: 10px; /* Adds space between text and icon */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Submit button hover effect */
 .submit-btn:hover {
-    transform: scale(1.1);
+    transform: translateY(-3px); /* Lift the button slightly */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Stronger shadow */
 }
 
 /* Form Focus Effect */
@@ -758,21 +772,26 @@ canvas {
     box-shadow: 0 0 5px rgba(108, 99, 255, 0.4); /* Focus effect */
 }
 
-/* Responsive Design */
+/* Adjust icon positioning on mobile */
 @media (max-width: 768px) {
-    .contact-form {
-        padding: 20px;
-    }
-
     .form-group i {
-        left: 10px; /* Adjust icon positioning on mobile */
+        left: 10px;
     }
 
     .contact-form input,
     .contact-form textarea {
         padding-left: 40px;
     }
+
+    .contact-form {
+        padding: 20px;
+    }
+
+    .submit-btn {
+        width: 100%; /* Full-width button for mobile */
+    }
 }
+
 
 
 /* Footer styles */
