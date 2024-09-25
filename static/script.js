@@ -43,6 +43,28 @@ function toggleGoToTopBtn() {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const sections = document.querySelectorAll(".section");
+
+    const observerOptions = {
+        threshold: 0.1, // Trigger when 10% of the section is visible
+    };
+
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("section-visible");
+                observer.unobserve(entry.target); // Stop observing once the animation is triggered
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+});
+
+
 // Smooth scroll to top when the button is clicked
 goToTopBtn.addEventListener("click", function(event) {
     event.preventDefault();
