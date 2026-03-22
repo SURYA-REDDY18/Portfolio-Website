@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import type { ComponentType, SVGProps } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import {
   SiDocker,
@@ -360,41 +360,213 @@ export default function App() {
 }
 
 function AmbientBackground() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const reduceMotion = useReducedMotion();
-  const ambientAnimation = useMemo(
-    () =>
-      reduceMotion
-        ? undefined
-        : {
-            x: [0, 28, -16, 0],
-            y: [0, 18, -12, 0],
-          },
-    [reduceMotion],
-  );
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    if (!canvas) {
+      return;
+    }
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      return;
+    }
+
+    type Particle = {
+      x: number;
+      y: number;
+      speedX: number;
+      speedY: number;
+      radius: number;
+    };
+
+    const particles: Particle[] = [];
+    let animationFrameId = 0;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let mouseX = -9999;
+    let mouseY = -9999;
+
+    const config = {
+      numberOfParticles: reduceMotion ? 48 : Math.min(140, Math.max(90, Math.floor(window.innerWidth / 14))),
+      minSpeed: reduceMotion ? 0 : 0.18,
+      maxSpeed: reduceMotion ? 0 : 0.48,
+      maxDistance: Math.min(160, 0.055 * window.innerWidth + 0.045 * window.innerHeight),
+      radiusMin: 1,
+      radiusMax: 2.4,
+      backgroundColor: "#071018",
+      particleColor: "rgba(214, 244, 241, 0.82)",
+      lineColor: "rgba(64, 201, 208, 1)",
+      glowColor: "rgba(245, 184, 77, 0.9)",
+      opacity: reduceMotion ? 0.12 : 0.2,
+      mouseSpace: 120,
+    };
+
+    const resizeCanvas = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      config.maxDistance = Math.min(160, 0.055 * width + 0.045 * height);
+    };
+
+    const createParticles = () => {
+      particles.length = 0;
+
+      for (let index = 0; index < config.numberOfParticles; index += 1) {
+        const speedX = Math.random() * (config.maxSpeed - config.minSpeed) + config.minSpeed;
+        const speedY = Math.random() * (config.maxSpeed - config.minSpeed) + config.minSpeed;
+
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          speedX: Math.random() <= 0.5 ? -speedX : speedX,
+          speedY: Math.random() <= 0.5 ? -speedY : speedY,
+          radius: Math.random() * (config.radiusMax - config.radiusMin) + config.radiusMin,
+        });
+      }
+    };
+
+    const drawBackdrop = () => {
+      context.fillStyle = config.backgroundColor;
+      context.fillRect(0, 0, width, height);
+
+      const gradient = context.createRadialGradient(width * 0.72, height * 0.18, 0, width * 0.72, height * 0.18, width * 0.6);
+      gradient.addColorStop(0, "rgba(27, 166, 166, 0.12)");
+      gradient.addColorStop(0.45, "rgba(245, 184, 77, 0.06)");
+      gradient.addColorStop(1, "rgba(7, 16, 24, 0)");
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, width, height);
+    };
+
+    const drawConnections = () => {
+      for (let index = 0; index < particles.length; index += 1) {
+        const particle = particles[index];
+
+        for (let nextIndex = index + 1; nextIndex < particles.length; nextIndex += 1) {
+          const nextParticle = particles[nextIndex];
+          const dx = particle.x - nextParticle.x;
+          const dy = particle.y - nextParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance > config.maxDistance) {
+            continue;
+          }
+
+          const alpha = (1 - distance / config.maxDistance) * config.opacity;
+          context.beginPath();
+          context.strokeStyle = config.lineColor;
+          context.globalAlpha = alpha;
+          context.lineWidth = 1;
+          context.moveTo(particle.x, particle.y);
+          context.lineTo(nextParticle.x, nextParticle.y);
+          context.stroke();
+        }
+      }
+    };
+
+    const drawParticles = () => {
+      for (const particle of particles) {
+        context.beginPath();
+        context.globalAlpha = config.opacity + 0.08;
+        context.fillStyle = config.particleColor;
+        context.shadowBlur = 10;
+        context.shadowColor = config.glowColor;
+        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        context.fill();
+      }
+      context.shadowBlur = 0;
+    };
+
+    const updateParticles = () => {
+      for (const particle of particles) {
+        if (!reduceMotion) {
+          particle.x += particle.speedX;
+          particle.y += particle.speedY;
+        }
+
+        if (particle.x <= 0 || particle.x >= width) {
+          particle.speedX *= -1;
+        }
+
+        if (particle.y <= 0 || particle.y >= height) {
+          particle.speedY *= -1;
+        }
+
+        const dx = particle.x - mouseX;
+        const dy = particle.y - mouseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < config.mouseSpace && distance > 0) {
+          const force = (config.mouseSpace - distance) / config.mouseSpace;
+          particle.x += (dx / distance) * force * 1.4;
+          particle.y += (dy / distance) * force * 1.4;
+        }
+      }
+    };
+
+    const renderFrame = () => {
+      drawBackdrop();
+      drawConnections();
+      drawParticles();
+      context.globalAlpha = 1;
+
+      if (!reduceMotion) {
+        updateParticles();
+        animationFrameId = window.requestAnimationFrame(renderFrame);
+      }
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+    };
+
+    const handlePointerLeave = () => {
+      mouseX = -9999;
+      mouseY = -9999;
+    };
+
+    const handleResize = () => {
+      resizeCanvas();
+      createParticles();
+      renderFrame();
+    };
+
+    resizeCanvas();
+    createParticles();
+    renderFrame();
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerleave", handlePointerLeave);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [reduceMotion]);
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
-      <motion.div
-        className="ambient-orb ambient-orb--clay"
-        animate={ambientAnimation}
-        transition={{ duration: 18, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="ambient-orb ambient-orb--teal"
-        animate={reduceMotion ? undefined : { x: [0, -24, 14, 0], y: [0, 14, -10, 0] }}
-        transition={{ duration: 22, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="ambient-orb ambient-orb--sand"
-        animate={reduceMotion ? undefined : { x: [0, 12, -18, 0], y: [0, -12, 10, 0] }}
-        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="ambient-spotlight"
-        animate={reduceMotion ? undefined : { x: ["48%", "54%", "50%"], y: ["16%", "22%", "18%"] }}
-        transition={{ duration: 24, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-      />
-      <div className="grid-overlay absolute inset-0 opacity-35" />
+    <div aria-hidden="true" className="ambient-scene pointer-events-none fixed inset-0 overflow-hidden">
+      <div className="ambient-scene__base" />
+      <canvas ref={canvasRef} className="ambient-canvas" />
+      <div className="ambient-mesh ambient-mesh--left" />
+      <div className="ambient-mesh ambient-mesh--right" />
+      <div className="ambient-glow ambient-glow--top" />
+      <div className="ambient-glow ambient-glow--bottom" />
+      <div className="ambient-scene__vignette" />
+      <div className="ambient-noise-field" />
     </div>
   );
 }
@@ -402,6 +574,7 @@ function AmbientBackground() {
 function Header() {
   const [activeSection, setActiveSection] = useState("about");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const mobileNavId = useId();
 
   useEffect(() => {
     if (!mobileNavOpen) {
@@ -430,6 +603,12 @@ function Header() {
     };
     media.addEventListener("change", closeOnWide);
     return () => media.removeEventListener("change", closeOnWide);
+  }, []);
+
+  useEffect(() => {
+    const closeMenu = () => setMobileNavOpen(false);
+    window.addEventListener("hashchange", closeMenu);
+    return () => window.removeEventListener("hashchange", closeMenu);
   }, []);
 
   useEffect(() => {
@@ -481,7 +660,7 @@ function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(15,23,31,0.68)] backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-4 lg:px-10">
+      <div className="site-header mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-10">
         <a href="#top" className="font-display text-lg uppercase tracking-[0.32em] text-[var(--color-sand)]">
           Surya
         </a>
@@ -496,16 +675,16 @@ function Header() {
             </a>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="site-header__actions flex items-center gap-2">
           <a href={resumePdf} target="_blank" rel="noreferrer" className="header-status">
             <span className="h-2 w-2 rounded-full bg-[var(--color-teal)] shadow-[0_0_12px_rgba(10,147,150,0.95)]" />
             Resume
           </a>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white md:hidden"
+            className={`mobile-menu-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white md:hidden${mobileNavOpen ? " is-open" : ""}`}
             aria-expanded={mobileNavOpen}
-            aria-controls="mobile-nav"
+            aria-controls={mobileNavId}
             aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
             onClick={() => setMobileNavOpen((open) => !open)}
           >
@@ -513,26 +692,32 @@ function Header() {
           </button>
         </div>
       </div>
-      <div
-        id="mobile-nav"
-        className="mobile-nav md:hidden"
-        hidden={!mobileNavOpen}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Site sections"
-      >
-        <nav aria-label="Mobile primary">
-          {NAV_SECTIONS.map((section) => (
-            <a
-              key={section.id}
-              href={`#${section.id}`}
-              className={`mobile-nav__link${activeSection === section.id ? " is-active" : ""}`}
-              onClick={() => setMobileNavOpen(false)}
-            >
-              {section.label}
-            </a>
-          ))}
-        </nav>
+      <div className={`mobile-nav-shell md:hidden${mobileNavOpen ? " is-open" : ""}`} hidden={!mobileNavOpen}>
+        <div
+          className="mobile-nav-backdrop"
+          aria-hidden="true"
+          onClick={() => setMobileNavOpen(false)}
+        />
+        <div
+          id={mobileNavId}
+          className="mobile-nav"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site sections"
+        >
+          <nav aria-label="Mobile primary">
+            {NAV_SECTIONS.map((section) => (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                className={`mobile-nav__link${activeSection === section.id ? " is-active" : ""}`}
+                onClick={() => setMobileNavOpen(false)}
+              >
+                {section.label}
+              </a>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );
@@ -564,7 +749,7 @@ function Hero() {
 
           <div className="space-y-6">
             <p className="max-w-xl text-sm uppercase tracking-[0.3em] text-[var(--color-clay)]">
-              Chicago-based backend engineer working across fintech and healthcare
+              Full Stack Developer working across fintech and healthcare
             </p>
             <h1 className="max-w-4xl font-display text-5xl leading-[0.92] tracking-[-0.04em] text-white sm:text-6xl lg:text-8xl">
               I build software that makes complex workflows simpler and more reliable.
@@ -936,7 +1121,7 @@ function EducationSection() {
 function ContactSection() {
   return (
     <section id="contact" className="px-6 py-24 lg:px-10" aria-labelledby="contact-heading">
-      <div className="mx-auto grid max-w-7xl gap-8 rounded-[2.5rem] border border-white/10 bg-[linear-gradient(135deg,rgba(238,155,0,0.14),rgba(10,147,150,0.12),rgba(255,255,255,0.04))] p-8 md:grid-cols-[1.05fr_0.95fr] md:p-10">
+      <div className="contact-panel mx-auto grid max-w-7xl gap-8 rounded-[2.5rem] border border-white/10 bg-[linear-gradient(135deg,rgba(238,155,0,0.14),rgba(10,147,150,0.12),rgba(255,255,255,0.04))] p-8 md:grid-cols-[1.05fr_0.95fr] md:p-10">
         <motion.div
           className="space-y-5"
           initial={{ opacity: 0, y: 26 }}
@@ -968,7 +1153,7 @@ function ContactSection() {
         </motion.div>
 
         <motion.div
-          className="space-y-4 rounded-[2rem] border border-white/10 bg-[rgba(7,11,15,0.52)] p-6 backdrop-blur-sm"
+          className="contact-links-panel space-y-4 rounded-[2rem] border border-white/10 bg-[rgba(7,11,15,0.52)] p-6 backdrop-blur-sm"
           initial={{ opacity: 0, y: 26 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -976,23 +1161,23 @@ function ContactSection() {
         >
           <a href="mailto:nallamillisuryareddy18@gmail.com" className="contact-link">
             <Mail size={18} />
-            nallamillisuryareddy18@gmail.com
+            <span className="contact-link__text">nallamillisuryareddy18@gmail.com</span>
           </a>
           <a href="tel:+13125457413" className="contact-link">
             <Phone size={18} />
-            312-545-7413
+            <span className="contact-link__text">312-545-7413</span>
           </a>
           <a href="https://github.com/SURYA-REDDY18" target="_blank" rel="noreferrer" className="contact-link">
             <Github size={18} />
-            github.com/SURYA-REDDY18
+            <span className="contact-link__text">github.com/SURYA-REDDY18</span>
           </a>
           <a href="https://www.linkedin.com/in/surya-nallamilli/" target="_blank" rel="noreferrer" className="contact-link">
             <Linkedin size={18} />
-            linkedin.com/in/surya-nallamilli
+            <span className="contact-link__text">linkedin.com/in/surya-nallamilli</span>
           </a>
           <p className="contact-link">
             <MapPin size={18} />
-            Chicago, Illinois
+            <span className="contact-link__text">Chicago, Illinois</span>
           </p>
           <a href={resumePdf} target="_blank" rel="noreferrer" className="cta-secondary mt-4 w-full justify-center">
             View Resume
