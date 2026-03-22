@@ -390,11 +390,17 @@ function AmbientBackground() {
     let height = window.innerHeight;
     let mouseX = -9999;
     let mouseY = -9999;
+    let lastFrameTime = 0;
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
 
     const config = {
-      numberOfParticles: reduceMotion ? 48 : Math.min(140, Math.max(90, Math.floor(window.innerWidth / 14))),
-      minSpeed: reduceMotion ? 0 : 0.18,
-      maxSpeed: reduceMotion ? 0 : 0.48,
+      numberOfParticles: reduceMotion
+        ? 40
+        : isTouchDevice
+          ? Math.min(64, Math.max(36, Math.floor(window.innerWidth / 20)))
+          : Math.min(140, Math.max(90, Math.floor(window.innerWidth / 14))),
+      minSpeed: reduceMotion ? 0 : isTouchDevice ? 0.08 : 0.18,
+      maxSpeed: reduceMotion ? 0 : isTouchDevice ? 0.22 : 0.48,
       maxDistance: Math.min(160, 0.055 * window.innerWidth + 0.045 * window.innerHeight),
       radiusMin: 1,
       radiusMax: 2.4,
@@ -402,8 +408,8 @@ function AmbientBackground() {
       particleColor: "rgba(214, 244, 241, 0.82)",
       lineColor: "rgba(64, 201, 208, 1)",
       glowColor: "rgba(245, 184, 77, 0.9)",
-      opacity: reduceMotion ? 0.12 : 0.2,
-      mouseSpace: 120,
+      opacity: reduceMotion ? 0.12 : isTouchDevice ? 0.15 : 0.2,
+      mouseSpace: isTouchDevice ? 0 : 120,
     };
 
     const resizeCanvas = () => {
@@ -447,6 +453,13 @@ function AmbientBackground() {
       context.fillRect(0, 0, width, height);
     };
 
+    const drawScene = () => {
+      drawBackdrop();
+      drawConnections();
+      drawParticles();
+      context.globalAlpha = 1;
+    };
+
     const drawConnections = () => {
       for (let index = 0; index < particles.length; index += 1) {
         const particle = particles[index];
@@ -486,11 +499,13 @@ function AmbientBackground() {
       context.shadowBlur = 0;
     };
 
-    const updateParticles = () => {
+    const updateParticles = (deltaMs: number) => {
+      const frameScale = Math.min(deltaMs, 32) / (1000 / 60);
+
       for (const particle of particles) {
         if (!reduceMotion) {
-          particle.x += particle.speedX;
-          particle.y += particle.speedY;
+          particle.x += particle.speedX * frameScale;
+          particle.y += particle.speedY * frameScale;
         }
 
         if (particle.x <= 0 || particle.x >= width) {
@@ -507,22 +522,22 @@ function AmbientBackground() {
 
         if (distance < config.mouseSpace && distance > 0) {
           const force = (config.mouseSpace - distance) / config.mouseSpace;
-          particle.x += (dx / distance) * force * 1.4;
-          particle.y += (dy / distance) * force * 1.4;
+          particle.x += (dx / distance) * force * 1.4 * frameScale;
+          particle.y += (dy / distance) * force * 1.4 * frameScale;
         }
       }
     };
 
-    const renderFrame = () => {
-      drawBackdrop();
-      drawConnections();
-      drawParticles();
-      context.globalAlpha = 1;
+    const renderFrame = (timestamp = 0) => {
+      const deltaMs = lastFrameTime === 0 ? 1000 / 60 : timestamp - lastFrameTime;
+      lastFrameTime = timestamp;
 
       if (!reduceMotion) {
-        updateParticles();
-        animationFrameId = window.requestAnimationFrame(renderFrame);
+        updateParticles(deltaMs);
       }
+
+      drawScene();
+      animationFrameId = window.requestAnimationFrame(renderFrame);
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -536,23 +551,40 @@ function AmbientBackground() {
     };
 
     const handleResize = () => {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = 0;
+      lastFrameTime = 0;
       resizeCanvas();
       createParticles();
-      renderFrame();
+
+      if (reduceMotion) {
+        drawScene();
+        return;
+      }
+
+      animationFrameId = window.requestAnimationFrame(renderFrame);
     };
 
     resizeCanvas();
     createParticles();
-    renderFrame();
+    if (reduceMotion) {
+      drawScene();
+    } else {
+      animationFrameId = window.requestAnimationFrame(renderFrame);
+    }
 
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerleave", handlePointerLeave);
+    if (!isTouchDevice) {
+      window.addEventListener("pointermove", handlePointerMove);
+      window.addEventListener("pointerleave", handlePointerLeave);
+    }
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", handlePointerLeave);
+      if (!isTouchDevice) {
+        window.removeEventListener("pointermove", handlePointerMove);
+        window.removeEventListener("pointerleave", handlePointerLeave);
+      }
       window.removeEventListener("resize", handleResize);
     };
   }, [reduceMotion]);
