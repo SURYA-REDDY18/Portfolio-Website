@@ -1,0 +1,950 @@
+import {
+  ArrowRight,
+  ArrowUp,
+  ArrowUpRight,
+  Binary,
+  BriefcaseBusiness,
+  Github,
+  GraduationCap,
+  Linkedin,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  Radar,
+  ShieldCheck,
+  Sparkles,
+  Trophy,
+  X,
+} from "lucide-react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
+import resumePdf from "../assets/resume/Surya_Reddy_Nallamilli_Resume_Software_Engineer.pdf";
+import { HeroSignalPanel } from "./components/HeroSignalPanel";
+import { SignalLabPanel } from "./components/SignalLabPanel";
+import { transitionStagger, transitionView } from "./motionPresets";
+
+const skills = [
+  "Java",
+  "Spring Boot",
+  "Python",
+  "Django",
+  "React",
+  "AWS",
+  "Docker",
+  "PostgreSQL",
+  "MongoDB",
+  "JWT Auth",
+  "RBAC",
+  "Gemini",
+  "OpenAI",
+  "OCR Pipelines",
+  "Batch Processing",
+  "REST APIs",
+];
+
+const heroMetrics = [
+  { label: "Experience", value: "3.5+ years" },
+  { label: "Batch Scale", value: "40k+ invoices / month" },
+  { label: "Automation", value: "90% manual entry reduction" },
+  { label: "Healthcare Data", value: "10k+ medical images processed" },
+];
+
+const signalStats = [
+  { label: "Current Role", value: "Software Engineer at Bectran" },
+  { label: "Core Focus", value: "Fintech automation, AI workflows, secure platforms" },
+  { label: "Location", value: "Chicago, Illinois" },
+];
+
+const proofPoints = [
+  "Gemini-powered fraud detection reports",
+  "HIPAA-compliant federated research platform",
+  "Custom RBAC and JWT access model",
+];
+
+const experience = [
+  {
+    role: "Software Engineer",
+    company: "Bectran, Inc",
+    period: "June 2025 - Present",
+    location: "Schaumburg, IL",
+    summary:
+      "Shipped AI-assisted financial workflows in Java and Spring Boot, combining LLMs, OCR, PDF generation, and batch systems for credit operations.",
+    achievements: [
+      "Implemented Gemini-powered fraud detection that generates validation reports with fraud scores, summaries, and follow-up actions.",
+      "Engineered a Lob API mailing system for 40,000+ invoices per month with scheduled batches, S3-backed PDFs, webhook tracking, and configurable delivery frequency.",
+      "Built a financial statement OCR pipeline with Gemini that cut manual data entry time by 90%.",
+    ],
+    focus: ["Java", "Spring Boot", "AWS", "Gemini", "Batch Processing"],
+  },
+  {
+    role: "Full Stack Developer",
+    company: "University of Illinois Chicago",
+    period: "May 2024 - May 2025",
+    location: "Chicago, IL",
+    summary:
+      "Built secure research infrastructure for confidential health data with Django, federated access patterns, custom permissions, and AWS deployment.",
+    achievements: [
+      "Contributed to an NIH-funded, HIPAA-compliant platform for managing and analyzing patient health data.",
+      "Architected a federated system connecting 5 medical centers using JWT authentication, encrypted key exchange, and secure federated search, improving data accessibility by 70%.",
+      "Automated DICOM de-identification for 10,000+ medical images with pixel-level anonymization and metadata cleansing, increasing throughput by 70%.",
+    ],
+    focus: ["Django", "JWT", "RBAC", "AWS", "DICOM"],
+  },
+  {
+    role: "Software Engineer",
+    company: "Cognizant Technology Solutions",
+    period: "August 2021 - June 2023",
+    location: "Hyderabad, India",
+    summary:
+      "Improved enterprise delivery speed through reusable SAP tooling, Python data pipelines, and stronger validation coverage in production workflows.",
+    achievements: [
+      "Created a reusable SAP framework that reduced repetitive ABAP coding by 90%.",
+      "Designed large-scale Python data pipelines with Pandas and NumPy, improving data quality by 60%.",
+      "Built unit and integration tests and analyzed production logs to resolve failures and improve delivery efficiency by 15%.",
+    ],
+    focus: ["SAP ABAP", "Python", "Pandas", "NumPy", "Testing"],
+  },
+];
+
+const education = [
+  {
+    school: "University of Illinois Chicago",
+    degree: "Master of Science in Computer Science",
+    period: "August 2023 - May 2025",
+    detail: "GPA: 3.89/4.0",
+    note: "Coursework: Machine Learning on Graphs, NLP, Data Science, Deep Learning for Computer Vision, Big Data Mining, Distributed Systems.",
+  },
+  {
+    school: "Amrita Vishwa Vidyapeetham",
+    degree: "Bachelor of Technology in Electronics and Communication Engineering",
+    period: "July 2017 - June 2021",
+    detail: "GPA: 8.26/10.0",
+    note: "Coursework: Data Structures and Algorithms, Database Systems, Neural Networks, Software Engineering, Cloud Computing.",
+  },
+];
+
+const highlights = [
+  {
+    title: "AI Automation",
+    detail: "LLM workflows for fraud checks, OCR extraction, and incident analysis.",
+  },
+  {
+    title: "Secure Systems",
+    detail: "JWT, RBAC, and healthcare data workflows built with compliance in mind.",
+  },
+];
+
+const featuredProject = {
+  title: "AI-Powered Incident and Root Cause Analysis Platform",
+  description:
+    "A Django and React observability platform that turns service logs into structured, evidence-backed RCA reports with OpenAI.",
+  href: "https://github.com/SURYA-REDDY18",
+  stats: [
+    { label: "Triage time", value: "60% less manual triage" },
+    { label: "Report quality", value: "80% RCA accuracy" },
+    { label: "Evaluation set", value: "25+ simulated incidents" },
+  ],
+  stack: ["Django", "React", "OpenAI", "Log Analysis", "RCA Workflows"],
+};
+
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.06,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: transitionStagger,
+  },
+};
+
+const NAV_SECTIONS = [
+  { id: "about", label: "About" },
+  { id: "impact", label: "Impact" },
+  { id: "experience", label: "Experience" },
+  { id: "project", label: "Project" },
+  { id: "education", label: "Education" },
+  { id: "contact", label: "Contact" },
+] as const;
+
+type SectionHeadingProps = {
+  sectionId: string;
+  index: string;
+  kicker: string;
+  title?: string;
+  subtitle?: string;
+  className?: string;
+};
+
+function SectionHeading({ sectionId, index, kicker, title, subtitle, className }: SectionHeadingProps) {
+  const headingId = title ? `${sectionId}-heading` : undefined;
+  return (
+    <header className={className ? `section-heading ${className}` : "section-heading"}>
+      <span className="section-heading__index" aria-hidden="true">
+        {index}
+      </span>
+      <p className="section-kicker">{kicker}</p>
+      {title ? (
+        <h2 id={headingId} className="section-title">
+          {title}
+        </h2>
+      ) : null}
+      {subtitle ? (
+        <p className="body-prose mt-4 text-lg">
+          {subtitle}
+        </p>
+      ) : null}
+    </header>
+  );
+}
+
+function SkipLink() {
+  return (
+    <a href="#main-content" className="skip-link">
+      Skip to main content
+    </a>
+  );
+}
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setVisible(window.scrollY > 420);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <a
+      href="#top"
+      className={`back-to-top${visible ? " is-visible" : ""}`}
+      aria-label="Back to top"
+    >
+      <ArrowUp size={20} strokeWidth={2.25} />
+    </a>
+  );
+}
+
+export default function App() {
+  const { scrollYProgress } = useScroll();
+  const smoothScrollProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 38,
+    mass: 0.15,
+    restDelta: 0.0005,
+  });
+
+  return (
+    <div className="min-h-screen bg-[var(--color-ink)] text-[var(--color-paper)]">
+      <SkipLink />
+      <motion.div className="scroll-progress" style={{ scaleX: smoothScrollProgress }} aria-hidden="true" />
+      <AmbientBackground />
+      <Header />
+      <main id="main-content" className="relative z-[1]">
+        <Hero />
+        <ProofStrip />
+        <About />
+        <SignalLabSection />
+        <ExperienceSection />
+        <FeaturedProjectSection />
+        <EducationSection />
+        <ContactSection />
+      </main>
+      <div>
+        <Footer />
+      </div>
+      <BackToTop />
+    </div>
+  );
+}
+
+function AmbientBackground() {
+  const reduceMotion = useReducedMotion();
+  const ambientAnimation = useMemo(
+    () =>
+      reduceMotion
+        ? undefined
+        : {
+            x: [0, 28, -16, 0],
+            y: [0, 18, -12, 0],
+          },
+    [reduceMotion],
+  );
+
+  return (
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
+      <motion.div
+        className="ambient-orb ambient-orb--clay"
+        animate={ambientAnimation}
+        transition={{ duration: 18, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="ambient-orb ambient-orb--teal"
+        animate={reduceMotion ? undefined : { x: [0, -24, 14, 0], y: [0, 14, -10, 0] }}
+        transition={{ duration: 22, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="ambient-orb ambient-orb--sand"
+        animate={reduceMotion ? undefined : { x: [0, 12, -18, 0], y: [0, -12, 10, 0] }}
+        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="ambient-spotlight"
+        animate={reduceMotion ? undefined : { x: ["48%", "54%", "50%"], y: ["16%", "22%", "18%"] }}
+        transition={{ duration: 24, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+      />
+      <div className="grid-overlay absolute inset-0 opacity-35" />
+    </div>
+  );
+}
+
+function Header() {
+  const [activeSection, setActiveSection] = useState("about");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileNavOpen) {
+      return;
+    }
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileNavOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileNavOpen]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const closeOnWide = () => {
+      if (media.matches) {
+        setMobileNavOpen(false);
+      }
+    };
+    media.addEventListener("change", closeOnWide);
+    return () => media.removeEventListener("change", closeOnWide);
+  }, []);
+
+  useEffect(() => {
+    const sectionElements = NAV_SECTIONS.map((section) => document.getElementById(section.id)).filter(
+      (element): element is HTMLElement => element !== null,
+    );
+
+    if (sectionElements.length === 0) {
+      return;
+    }
+
+    let rafId = 0;
+
+    const updateActiveSection = () => {
+      const headerOffset = 120;
+      const probeLine = window.scrollY + headerOffset + window.innerHeight * 0.22;
+      const currentSection =
+        [...sectionElements]
+          .reverse()
+          .find((element) => element.offsetTop <= probeLine) ?? sectionElements[0];
+
+      if (currentSection?.id) {
+        setActiveSection(currentSection.id);
+      }
+    };
+
+    const scheduleUpdate = () => {
+      if (rafId !== 0) {
+        return;
+      }
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        updateActiveSection();
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      if (rafId !== 0) {
+        cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
+  }, []);
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(15,23,31,0.68)] backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-4 lg:px-10">
+        <a href="#top" className="font-display text-lg uppercase tracking-[0.32em] text-[var(--color-sand)]">
+          Surya
+        </a>
+        <nav className="hidden items-center gap-2 text-sm md:flex" aria-label="Primary">
+          {NAV_SECTIONS.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              className={`nav-pill${activeSection === section.id ? " is-active" : ""}`}
+            >
+              {section.label}
+            </a>
+          ))}
+        </nav>
+        <div className="flex items-center gap-2">
+          <a href={resumePdf} target="_blank" rel="noreferrer" className="header-status">
+            <span className="h-2 w-2 rounded-full bg-[var(--color-teal)] shadow-[0_0_12px_rgba(10,147,150,0.95)]" />
+            Resume
+          </a>
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white md:hidden"
+            aria-expanded={mobileNavOpen}
+            aria-controls="mobile-nav"
+            aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileNavOpen((open) => !open)}
+          >
+            {mobileNavOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </div>
+      <div
+        id="mobile-nav"
+        className="mobile-nav md:hidden"
+        hidden={!mobileNavOpen}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site sections"
+      >
+        <nav aria-label="Mobile primary">
+          {NAV_SECTIONS.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              className={`mobile-nav__link${activeSection === section.id ? " is-active" : ""}`}
+              onClick={() => setMobileNavOpen(false)}
+            >
+              {section.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+function Hero() {
+  const reduceMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const floatYRaw = useTransform(scrollY, [0, 500], [0, reduceMotion ? 0 : 24]);
+  const floatY = useSpring(floatYRaw, {
+    stiffness: 100,
+    damping: 40,
+    mass: 0.2,
+  });
+
+  return (
+    <section id="top" className="relative overflow-hidden px-6 pb-20 pt-14 lg:px-10 lg:pb-28 lg:pt-20">
+      <motion.div
+        className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.04fr_0.96fr] lg:items-start"
+        variants={container}
+        initial={false}
+        animate="visible"
+      >
+        <motion.div variants={item} className="space-y-8">
+          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70">
+            <Sparkles size={16} className="text-[var(--color-sand)]" />
+            Software Engineer building fintech, healthcare, and AI-powered systems
+          </div>
+
+          <div className="space-y-6">
+            <p className="max-w-xl text-sm uppercase tracking-[0.3em] text-[var(--color-clay)]">
+              Chicago-based engineer focused on secure backend systems, product workflows, and measurable automation
+            </p>
+            <h1 className="max-w-4xl font-display text-5xl leading-[0.92] tracking-[-0.04em] text-white sm:text-6xl lg:text-8xl">
+              Turning complex operations into reliable software.
+            </h1>
+            <p className="body-prose max-w-2xl text-lg">
+              I build backend systems for automation, secure data workflows, and AI-assisted analysis.
+            </p>
+          </div>
+
+          <div className="hero-metric-grid">
+            {heroMetrics.map((metric, index) => (
+              <motion.div
+                key={metric.label}
+                className="hero-metric-card"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 + index * 0.1, ...transitionStagger }}
+              >
+                <span>{metric.label}</span>
+                <strong>{metric.value}</strong>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-4">
+            <a href="#experience" className="cta-primary">
+              View Experience
+              <ArrowRight size={16} />
+            </a>
+            <a href={resumePdf} target="_blank" rel="noreferrer" className="cta-secondary">
+              Open Resume
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+
+          <div className="hero-socials">
+            <a href="https://github.com/SURYA-REDDY18" target="_blank" rel="noreferrer" className="social-chip">
+              <Github size={16} />
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/surya-nallamilli/" target="_blank" rel="noreferrer" className="social-chip">
+              <Linkedin size={16} />
+              LinkedIn
+            </a>
+            <a href="mailto:nallamillisuryareddy@gmail.com" className="social-chip">
+              <Mail size={16} />
+              Email
+            </a>
+          </div>
+        </motion.div>
+
+        <motion.div variants={item} className="relative" style={{ y: floatY }}>
+          <div className="absolute inset-0 translate-x-6 translate-y-6 rounded-[2rem] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.01))]" />
+          <div className="relative space-y-5 overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] p-5 shadow-[0_30px_120px_rgba(0,0,0,0.35)]">
+            <HeroSignalPanel />
+          </div>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+function ProofStrip() {
+  const marqueeItems = [...skills, ...skills];
+
+  return (
+    <section className="relative overflow-hidden border-y border-white/8 bg-black/12 px-6 py-6 backdrop-blur-sm lg:px-10">
+      <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+        <div className="grid gap-4">
+          {signalStats.map((stat) => (
+            <div key={stat.label} className="signal-stat">
+              <span>{stat.label}</span>
+              <strong>{stat.value}</strong>
+            </div>
+          ))}
+        </div>
+        <div className="marquee-shell">
+          <div className="marquee-track">
+            {marqueeItems.map((skill, index) => (
+              <span key={`${skill}-${index}`} className="marquee-pill">
+                <Binary size={14} />
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function About() {
+  return (
+    <section id="about" className="px-6 py-24 lg:px-10" aria-labelledby="about-heading">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.78fr_1.22fr]">
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={transitionView}
+        >
+          <SectionHeading
+            sectionId="about"
+            index="01"
+            kicker="About"
+            title="Backend-First, Product-Minded."
+            subtitle="I build software that removes manual work, handles sensitive data responsibly, and holds up in production."
+          />
+          <div className="feature-rail">
+            <div className="feature-rail__line" />
+            <div className="feature-rail__items">
+              {proofPoints.map((point) => (
+                <div key={point} className="feature-rail__item">
+                  <ShieldCheck size={18} />
+                  {point}
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="about-panel"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ ...transitionView, delay: 0.08 }}
+        >
+          <div className="about-grid">
+            {highlights.map((highlight) => (
+              <div key={highlight.title} className="about-card">
+                <p className="about-card__kicker">{highlight.title}</p>
+                <p className="about-card__body">{highlight.detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <p className="text-sm uppercase tracking-[0.26em] text-[var(--color-clay)]">Core Stack</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {skills.map((skill, index) => (
+                <motion.span
+                  key={skill}
+                  className="stack-pill"
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (index % 8) * 0.04, ...transitionStagger }}
+                >
+                  {skill}
+                </motion.span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function SignalLabSection() {
+  return (
+    <section id="impact" className="px-6 py-24 lg:px-10" aria-labelledby="impact-heading">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.78fr_1.22fr]">
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={transitionView}
+        >
+          <SectionHeading
+            sectionId="impact"
+            index="02"
+            kicker="Impact"
+            title="What I Shipped."
+            subtitle="Switch between work snapshots to see the systems, outcomes, and technology patterns behind each role."
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ ...transitionView, delay: 0.08 }}
+        >
+          <SignalLabPanel />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function ExperienceSection() {
+  return (
+    <section id="experience" className="px-6 py-24 lg:px-10" aria-labelledby="experience-heading">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <SectionHeading
+            sectionId="experience"
+            index="03"
+            kicker="Experience"
+            title="Experience Across Real Systems."
+            className="max-w-4xl"
+          />
+          <div className="inline-flex shrink-0 items-center gap-2 text-sm text-[var(--color-text-soft)]">
+            <MapPin size={15} aria-hidden="true" />
+            Chicago, IL
+          </div>
+        </div>
+        <div className="experience-timeline mt-12">
+          {experience.map((entry, index) => (
+            <motion.article
+              key={`${entry.company}-${entry.period}`}
+              className="experience-card"
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.22 }}
+              transition={{ ...transitionView, delay: index * 0.08, duration: 0.72 }}
+            >
+              <div className="experience-card__rail">
+                <div className="experience-card__node">
+                  <BriefcaseBusiness size={18} />
+                </div>
+              </div>
+              <div className="experience-card__content">
+                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.22em] text-[var(--color-clay)]">{entry.period}</p>
+                    <h3 className="mt-3 text-2xl font-semibold text-white">{entry.role}</h3>
+                  </div>
+                  <div className="experience-company-pill">
+                    <span>{entry.company}</span>
+                    <strong>{entry.location}</strong>
+                  </div>
+                </div>
+                <p className="body-prose body-prose--wide mt-4 text-base">{entry.summary}</p>
+                <ul className="experience-bullets">
+                  {entry.achievements.map((achievement) => (
+                    <li key={achievement}>{achievement}</li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  {entry.focus.map((tag) => (
+                    <span key={tag} className="experience-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedProjectSection() {
+  return (
+    <section id="project" className="px-6 py-24 lg:px-10" aria-labelledby="project-heading">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading
+          sectionId="project"
+          index="04"
+          kicker="Featured Project"
+          title="Open-source highlight"
+          subtitle="Django, React, and OpenAI in a single shipped case study."
+        />
+        <motion.a
+          href={featuredProject.href}
+          target="_blank"
+          rel="noreferrer"
+          className="featured-project"
+          initial={{ opacity: 0, y: 26 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.22 }}
+          transition={transitionView}
+          whileHover={{ y: -6, transition: { duration: 0.35, ease: transitionView.ease } }}
+        >
+          <div className="featured-project__media">
+            <div className="featured-project__badge">
+              <Trophy size={16} />
+              Resume Project
+            </div>
+            <div className="featured-project__visual">
+              <div className="featured-project__art">
+                <div className="featured-project__rings">
+                  <div className="featured-project__ring featured-project__ring--outer" />
+                  <div className="featured-project__ring featured-project__ring--middle" />
+                  <div className="featured-project__ring featured-project__ring--inner" />
+                  <div className="featured-project__beam" />
+                  <div className="featured-project__core">
+                    <Radar size={24} />
+                    <span>RCA</span>
+                  </div>
+                </div>
+                <div className="featured-project__floating featured-project__floating--top">
+                  <span>Incident Signal</span>
+                  <strong>payments-api retry spike</strong>
+                </div>
+                <div className="featured-project__floating featured-project__floating--bottom">
+                  <ShieldCheck size={16} />
+                  <div>
+                    <span>Structured Output</span>
+                    <strong>Evidence-backed remediation</strong>
+                  </div>
+                </div>
+                <div className="featured-project__glow featured-project__glow--teal" />
+                <div className="featured-project__glow featured-project__glow--sand" />
+              </div>
+            </div>
+          </div>
+          <div className="featured-project__content">
+            <p className="text-sm uppercase tracking-[0.24em] text-[var(--color-clay)]">Django + React + OpenAI</p>
+            <div className="mt-3 flex items-start justify-between gap-4">
+              <h3 className="font-display text-4xl leading-tight text-white">{featuredProject.title}</h3>
+              <ArrowUpRight size={20} className="mt-2 shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
+            </div>
+            <p className="body-prose body-prose--wide mt-5 text-lg">{featuredProject.description}</p>
+            <div className="featured-project__stats">
+              {featuredProject.stats.map((stat) => (
+                <div key={stat.label} className="featured-project__stat">
+                  <span>{stat.label}</span>
+                  <strong>{stat.value}</strong>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {featuredProject.stack.map((item) => (
+                <span key={item} className="stack-pill">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.a>
+      </div>
+    </section>
+  );
+}
+
+function EducationSection() {
+  return (
+    <section id="education" className="px-6 py-24 lg:px-10" aria-labelledby="education-heading">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading
+          sectionId="education"
+          index="05"
+          kicker="Education"
+          title="Degrees & coursework"
+        />
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {education.map((entry, index) => (
+            <motion.article
+              key={entry.school}
+              className="education-card"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.22 }}
+              transition={{ ...transitionView, delay: index * 0.1 }}
+              whileHover={{ y: -6, transition: { duration: 0.35, ease: transitionView.ease } }}
+            >
+              <div className="education-card__badge">
+                <GraduationCap size={18} />
+              </div>
+              <p className="text-sm uppercase tracking-[0.22em] text-[var(--color-clay)]">{entry.period}</p>
+              <h3 className="mt-4 text-2xl font-semibold text-white">{entry.degree}</h3>
+              <p className="mt-2 text-base text-[var(--color-sand)]">{entry.school}</p>
+              <p className="body-prose mt-4 text-base">{entry.note}</p>
+              <p className="mt-5 inline-flex rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm text-white/76">
+                {entry.detail}
+              </p>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactSection() {
+  return (
+    <section id="contact" className="px-6 py-24 lg:px-10" aria-labelledby="contact-heading">
+      <div className="mx-auto grid max-w-7xl gap-8 rounded-[2.5rem] border border-white/10 bg-[linear-gradient(135deg,rgba(238,155,0,0.14),rgba(10,147,150,0.12),rgba(255,255,255,0.04))] p-8 md:grid-cols-[1.05fr_0.95fr] md:p-10">
+        <motion.div
+          className="space-y-5"
+          initial={{ opacity: 0, y: 26 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={transitionView}
+        >
+          <SectionHeading
+            sectionId="contact"
+            index="06"
+            kicker="Contact"
+            title="Backend, Platforms, AI."
+            subtitle="I'm looking for roles where scalable systems, secure data handling, and useful automation matter in production."
+            className="max-w-2xl"
+          />
+          <div className="contact-console">
+            <div className="contact-console__row">
+              <span>Status</span>
+              <strong>Open to software engineering opportunities</strong>
+            </div>
+            <div className="contact-console__row">
+              <span>Preferred work</span>
+              <strong>Backend systems, product engineering, AI-assisted workflows</strong>
+            </div>
+            <div className="contact-console__row">
+              <span>Strengths</span>
+              <strong>Java, Spring Boot, Python, Django, AWS, secure platform design</strong>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="space-y-4 rounded-[2rem] border border-white/10 bg-[rgba(7,11,15,0.52)] p-6 backdrop-blur-sm"
+          initial={{ opacity: 0, y: 26 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ ...transitionView, delay: 0.08 }}
+        >
+          <a href="mailto:nallamillisuryareddy@gmail.com" className="contact-link">
+            <Mail size={18} />
+            nallamillisuryareddy@gmail.com
+          </a>
+          <a href="tel:+13125457413" className="contact-link">
+            <Phone size={18} />
+            312-545-7413
+          </a>
+          <a href="https://github.com/SURYA-REDDY18" target="_blank" rel="noreferrer" className="contact-link">
+            <Github size={18} />
+            github.com/SURYA-REDDY18
+          </a>
+          <a href="https://www.linkedin.com/in/surya-nallamilli/" target="_blank" rel="noreferrer" className="contact-link">
+            <Linkedin size={18} />
+            linkedin.com/in/surya-nallamilli
+          </a>
+          <p className="contact-link">
+            <MapPin size={18} />
+            Chicago, Illinois
+          </p>
+          <a href={resumePdf} target="_blank" rel="noreferrer" className="cta-secondary mt-4 w-full justify-center">
+            View Resume
+            <ArrowUpRight size={16} />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="px-6 pb-10 lg:px-10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/52 md:flex-row md:items-center md:justify-between">
+        <p>Surya Reddy Nallamilli © 2026</p>
+        <div className="flex items-center gap-4">
+          <a href="https://github.com/SURYA-REDDY18" target="_blank" rel="noreferrer" className="footer-link">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/surya-nallamilli/" target="_blank" rel="noreferrer" className="footer-link">
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}
