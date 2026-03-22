@@ -894,20 +894,6 @@ button:focus-visible {
   min-height: 100%;
 }
 
-.featured-project__badge {
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  background: rgba(11, 20, 28, 0.72);
-  padding: 0.75rem 0.95rem;
-  color: white;
-}
-
 .featured-project__visual {
   display: grid;
   min-height: 100%;
@@ -1027,6 +1013,12 @@ button:focus-visible {
   align-items: start;
 }
 
+.featured-project__floating--bottom > div {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
 .featured-project__floating svg {
   color: var(--color-sand);
   margin-top: 0.1rem;
@@ -1040,6 +1032,7 @@ button:focus-visible {
 }
 
 .featured-project__floating strong {
+  display: block;
   color: white;
   line-height: 1.5;
 }

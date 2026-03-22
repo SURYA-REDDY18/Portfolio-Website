@@ -14,7 +14,6 @@ import {
   Radar,
   ShieldCheck,
   Sparkles,
-  Trophy,
   X,
 } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
@@ -522,7 +521,7 @@ function Hero() {
               <Linkedin size={16} />
               LinkedIn
             </a>
-            <a href="mailto:nallamillisuryareddy@gmail.com" className="social-chip">
+            <a href="mailto:nallamillisuryareddy18@gmail.com" className="social-chip">
               <Mail size={16} />
               Email
             </a>
@@ -759,10 +758,6 @@ function FeaturedProjectSection() {
           whileHover={{ y: -6, transition: { duration: 0.35, ease: transitionView.ease } }}
         >
           <div className="featured-project__media">
-            <div className="featured-project__badge">
-              <Trophy size={16} />
-              Resume Project
-            </div>
             <div className="featured-project__visual">
               <div className="featured-project__art">
                 <div className="featured-project__rings">
@@ -901,9 +896,9 @@ function ContactSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ ...transitionView, delay: 0.08 }}
         >
-          <a href="mailto:nallamillisuryareddy@gmail.com" className="contact-link">
+          <a href="mailto:nallamillisuryareddy18@gmail.com" className="contact-link">
             <Mail size={18} />
-            nallamillisuryareddy@gmail.com
+            nallamillisuryareddy18@gmail.com
           </a>
           <a href="tel:+13125457413" className="contact-link">
             <Phone size={18} />
