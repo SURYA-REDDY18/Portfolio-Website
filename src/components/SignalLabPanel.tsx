@@ -9,17 +9,18 @@ const modes = [
     icon: Workflow,
     title: "Bectran: document-heavy financial automation",
     summary:
-      "Built Spring Boot services that combine LLMs, PDFs, batch schedules, and third-party APIs for credit operations.",
+      "Built Spring Boot workflows for credit operations using OCR, PDFs, batch jobs, and third-party APIs.",
     bullets: [
       "40k+ invoices mailed monthly",
-      "90% reduction in financial statement data entry",
-      "70% reduction in W-9 form entry",
+      "90% less manual financial-statement entry",
+      "70% less W-9 form entry work",
     ],
+    bulletLabels: ["Scale", "Efficiency", "Automation"],
     console: {
       stack: "Java + Spring Boot + AWS + Gemini + Lob",
-      priority: "fraud validation and document workflows",
+      focus: "Fraud validation and document workflows",
     },
-    status: "live",
+    status: "Production",
   },
   {
     id: "healthcare",
@@ -27,35 +28,37 @@ const modes = [
     icon: Lock,
     title: "UIC: HIPAA-compliant federated research platform",
     summary:
-      "Designed secure data workflows for patient research across institutions with strong access controls and privacy-preserving processing.",
+      "Built secure patient-data workflows for research teams across institutions with privacy and access control built in.",
     bullets: [
       "5 medical centers connected",
       "10k+ DICOM images de-identified",
-      "70% better cross-site accessibility and throughput",
+      "70% better cross-site data access",
     ],
+    bulletLabels: ["Federation", "Data Volume", "Access"],
     console: {
       stack: "Django + JWT + RBAC + AWS + DICOM tooling",
-      priority: "secure federation and data privacy",
+      focus: "Secure federation and patient-data privacy",
     },
-    status: "secure",
+    status: "HIPAA-sensitive",
   },
   {
     id: "ai",
-    label: "AI Product",
+    label: "AI Project",
     icon: Bot,
-    title: "Root cause analysis platform",
+    title: "Featured project: root cause analysis platform",
     summary:
-      "Used OpenAI in an observability workflow to turn grouped service failures into structured, evidence-backed RCA reports.",
+      "Built an OpenAI-powered observability project that turns grouped service failures into structured RCA reports.",
     bullets: [
       "60% less manual incident triage",
       "80% RCA accuracy",
       "25+ simulated incidents evaluated",
     ],
+    bulletLabels: ["Triage", "Accuracy", "Evaluation"],
     console: {
       stack: "Django + React + OpenAI + log analysis",
-      priority: "incident grouping and report generation",
+      focus: "Incident grouping and report generation",
     },
-    status: "active",
+    status: "Featured project",
   },
 ];
 
@@ -114,7 +117,7 @@ export function SignalLabPanel() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.06 * index, duration: 0.28 }}
             >
-              <span>Highlight {index + 1}</span>
+              <span>{activeMode.bulletLabels[index]}</span>
               <strong>{item}</strong>
             </motion.div>
           ))}
@@ -126,8 +129,8 @@ export function SignalLabPanel() {
             <strong>{activeMode.console.stack}</strong>
           </div>
           <div className="signal-lab__console-row">
-            <span>$ priority</span>
-            <strong>{activeMode.console.priority}</strong>
+            <span>$ focus</span>
+            <strong>{activeMode.console.focus}</strong>
           </div>
         </div>
       </motion.div>
