@@ -334,6 +334,7 @@ button:focus-visible {
 }
 
 .hero-metric-card {
+  position: relative;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.35rem;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
@@ -348,6 +349,17 @@ button:focus-visible {
   border-color: rgba(255, 255, 255, 0.14);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
+}
+
+.hero-metric-card__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.7rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-sand);
 }
 
 .hero-metric-card span {
@@ -560,6 +572,17 @@ button:focus-visible {
   min-height: 100%;
 }
 
+.about-card__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-bottom: 0.85rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-sand);
+}
+
 .about-card__kicker {
   margin: 0;
   font-size: 0.74rem;
@@ -575,6 +598,9 @@ button:focus-visible {
 }
 
 .stack-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
@@ -584,6 +610,10 @@ button:focus-visible {
     transform var(--duration-ui) var(--ease-smooth),
     border-color var(--duration-ui) var(--ease-smooth),
     background-color var(--duration-ui) var(--ease-smooth);
+}
+
+.stack-pill svg {
+  flex-shrink: 0;
 }
 
 .stack-pill:hover {
@@ -858,12 +888,19 @@ button:focus-visible {
 }
 
 .experience-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
   padding: 0.55rem 0.85rem;
   color: rgba(255, 255, 255, 0.74);
   font-size: 0.88rem;
+}
+
+.experience-tag svg {
+  flex-shrink: 0;
 }
 
 .featured-project {
@@ -1072,10 +1109,22 @@ button:focus-visible {
 }
 
 .featured-project__stat {
+  display: grid;
+  gap: 0.35rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1.15rem;
   background: rgba(255, 255, 255, 0.04);
   padding: 1rem;
+}
+
+.featured-project__stat-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-sand);
 }
 
 .featured-project__stat span {
@@ -1103,6 +1152,23 @@ button:focus-visible {
 }
 
 .contact-console__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.contact-console__row-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-sand);
+}
+
+.contact-console__row > div:last-child {
   display: grid;
   gap: 0.2rem;
 }

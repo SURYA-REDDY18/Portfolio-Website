@@ -1,64 +1,110 @@
 import {
+  Activity,
   ArrowRight,
   ArrowUp,
   ArrowUpRight,
-  Binary,
+  BrainCircuit,
   BriefcaseBusiness,
+  Clock3,
+  Cloud,
+  Code2,
+  FileSearch,
   Github,
   GraduationCap,
+  KeyRound,
   Linkedin,
   Mail,
   MapPin,
   Menu,
+  Shield,
   Phone,
   Radar,
   ShieldCheck,
   Sparkles,
+  Workflow,
   X,
 } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import type { ComponentType, SVGProps } from "react";
 import { useEffect, useMemo, useState } from "react";
+import type { IconType } from "react-icons";
+import {
+  SiDocker,
+  SiDjango,
+  SiGit,
+  SiGooglegemini,
+  SiJsonwebtokens,
+  SiMongodb,
+  SiNumpy,
+  SiOpenai,
+  SiOpenjdk,
+  SiPandas,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiSpringboot,
+  SiTypescript,
+} from "react-icons/si";
 import resumePdf from "../assets/resume/Surya_Reddy_Nallamilli_Resume_Software_Engineer.pdf";
 import { HeroSignalPanel } from "./components/HeroSignalPanel";
 import { SignalLabPanel } from "./components/SignalLabPanel";
 import { transitionStagger, transitionView } from "./motionPresets";
 
-const skills = [
-  "Java",
-  "Spring Boot",
-  "Python",
-  "Django",
-  "React",
-  "AWS",
-  "Docker",
-  "PostgreSQL",
-  "MongoDB",
-  "JWT Auth",
-  "RBAC",
-  "Gemini",
-  "OpenAI",
-  "OCR Pipelines",
-  "Batch Processing",
-  "REST APIs",
+type Skill = {
+  label: string;
+  icon: IconType;
+  color: string;
+};
+
+type UiIcon = ComponentType<SVGProps<SVGSVGElement>>;
+
+type HeroMetric = {
+  label: string;
+  value: string;
+  icon: UiIcon;
+};
+
+type Highlight = {
+  title: string;
+  detail: string;
+  icon: UiIcon;
+};
+
+type ContactRow = {
+  label: string;
+  value: string;
+  icon: UiIcon;
+};
+
+const skills: Skill[] = [
+  { label: "Java", icon: SiOpenjdk, color: "#f89820" },
+  { label: "Spring Boot", icon: SiSpringboot, color: "#6db33f" },
+  { label: "Python", icon: SiPython, color: "#3776ab" },
+  { label: "Django", icon: SiDjango, color: "#44b78b" },
+  { label: "React", icon: SiReact, color: "#61dafb" },
+  { label: "TypeScript", icon: SiTypescript, color: "#3178c6" },
+  { label: "Docker", icon: SiDocker, color: "#2496ed" },
+  { label: "PostgreSQL", icon: SiPostgresql, color: "#4169e1" },
+  { label: "MongoDB", icon: SiMongodb, color: "#47a248" },
+  { label: "JWT", icon: SiJsonwebtokens, color: "#f97316" },
+  { label: "OpenAI", icon: SiOpenai, color: "#ffffff" },
+  { label: "Gemini", icon: SiGooglegemini, color: "#8ab4f8" },
+  { label: "Pandas", icon: SiPandas, color: "#150458" },
+  { label: "NumPy", icon: SiNumpy, color: "#4dabcf" },
+  { label: "Git", icon: SiGit, color: "#f05032" },
 ];
 
-const heroMetrics = [
-  { label: "Experience", value: "3.5+ years" },
-  { label: "Batch Scale", value: "40k+ invoices / month" },
-  { label: "Automation", value: "90% manual entry reduction" },
-  { label: "Healthcare Data", value: "10k+ medical images processed" },
-];
-
-const signalStats = [
-  { label: "Current Role", value: "Software Engineer at Bectran" },
-  { label: "Core Focus", value: "Fintech automation, AI workflows, secure platforms" },
-  { label: "Location", value: "Chicago, Illinois" },
+const heroMetrics: HeroMetric[] = [
+  { label: "Current Role", value: "Software Engineer at Bectran", icon: BriefcaseBusiness },
+  { label: "Based In", value: "Chicago, Illinois", icon: MapPin },
+  { label: "Focus", value: "Backend, AI workflows, secure systems", icon: BrainCircuit },
+  { label: "Experience", value: "3.5+ years across fintech and healthcare", icon: Clock3 },
 ];
 
 const proofPoints = [
-  "Gemini-powered fraud detection reports",
-  "HIPAA-compliant federated research platform",
-  "Custom RBAC and JWT access model",
+  "40k+ invoices processed in monthly production workflows",
+  "90% reduction in financial-statement data entry through OCR",
+  "10k+ medical images prepared for privacy-sensitive research workflows",
 ];
 
 const experience = [
@@ -123,14 +169,16 @@ const education = [
   },
 ];
 
-const highlights = [
+const highlights: Highlight[] = [
   {
-    title: "AI Automation",
-    detail: "LLM workflows for fraud checks, OCR extraction, and incident analysis.",
+    title: "How I Work",
+    detail: "I like backend problems tied to real operations, where reliability and clarity matter more than flashy demos.",
+    icon: Workflow,
   },
   {
-    title: "Secure Systems",
-    detail: "JWT, RBAC, and healthcare data workflows built with compliance in mind.",
+    title: "What Teams Get",
+    detail: "Cleaner workflows, less manual effort, and systems that are easier to trust once they hit production.",
+    icon: Shield,
   },
 ];
 
@@ -140,12 +188,53 @@ const featuredProject = {
     "A Django and React observability platform that turns service logs into structured, evidence-backed RCA reports with OpenAI.",
   href: "https://github.com/SURYA-REDDY18",
   stats: [
-    { label: "Triage time", value: "60% less manual triage" },
-    { label: "Report quality", value: "80% RCA accuracy" },
-    { label: "Evaluation set", value: "25+ simulated incidents" },
+    { label: "Triage time", value: "60% less manual triage", icon: Activity },
+    { label: "Report quality", value: "80% RCA accuracy", icon: ShieldCheck },
+    { label: "Evaluation set", value: "25+ simulated incidents", icon: Radar },
   ],
   stack: ["Django", "React", "OpenAI", "Log Analysis", "RCA Workflows"],
 };
+
+const contactRows: ContactRow[] = [
+  { label: "Status", value: "Open to software engineering opportunities", icon: BriefcaseBusiness },
+  { label: "Best Fit", value: "Backend and platform roles with meaningful product or operations impact", icon: Code2 },
+  { label: "Based In", value: "Chicago, Illinois", icon: MapPin },
+];
+
+const skillMap = new Map(skills.map((skill) => [skill.label, skill] as const));
+
+const experienceTagIcons: Record<string, UiIcon | IconType> = {
+  "Spring Boot": SiSpringboot,
+  Django: SiDjango,
+  Python: SiPython,
+  Pandas: SiPandas,
+  NumPy: SiNumpy,
+  Gemini: SiGooglegemini,
+  JWT: SiJsonwebtokens,
+  AWS: Cloud,
+  "Batch Processing": Workflow,
+  "SAP ABAP": Code2,
+  Testing: ShieldCheck,
+  DICOM: FileSearch,
+  RBAC: KeyRound,
+  Java: SiOpenjdk,
+};
+
+function getTagVisual(tag: string): { icon: UiIcon | IconType; color?: string } {
+  const matchedSkill = skillMap.get(tag);
+
+  if (matchedSkill) {
+    return { icon: matchedSkill.icon, color: matchedSkill.color };
+  }
+
+  const mappedIcon = experienceTagIcons[tag];
+
+  if (mappedIcon) {
+    return { icon: mappedIcon };
+  }
+
+  return { icon: Code2 };
+}
 
 const container = {
   hidden: { opacity: 0 },
@@ -255,7 +344,6 @@ export default function App() {
       <Header />
       <main id="main-content" className="relative z-[1]">
         <Hero />
-        <ProofStrip />
         <About />
         <SignalLabSection />
         <ExperienceSection />
@@ -471,18 +559,18 @@ function Hero() {
         <motion.div variants={item} className="space-y-8">
           <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70">
             <Sparkles size={16} className="text-[var(--color-sand)]" />
-            Software Engineer building fintech, healthcare, and AI-powered systems
+            Hi, I'm Surya Reddy
           </div>
 
           <div className="space-y-6">
             <p className="max-w-xl text-sm uppercase tracking-[0.3em] text-[var(--color-clay)]">
-              Chicago-based engineer focused on secure backend systems, product workflows, and measurable automation
+              Chicago-based backend engineer working across fintech and healthcare
             </p>
             <h1 className="max-w-4xl font-display text-5xl leading-[0.92] tracking-[-0.04em] text-white sm:text-6xl lg:text-8xl">
-              Turning complex operations into reliable software.
+              I build software that makes complex workflows simpler and more reliable.
             </h1>
             <p className="body-prose max-w-2xl text-lg">
-              I build backend systems for automation, secure data workflows, and AI-assisted analysis.
+              3.5+ years of experience building backend workflows, document pipelines, and product systems used by real teams.
             </p>
           </div>
 
@@ -495,6 +583,9 @@ function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + index * 0.1, ...transitionStagger }}
               >
+                <div className="hero-metric-card__icon">
+                  <metric.icon width={16} height={16} aria-hidden="true" />
+                </div>
                 <span>{metric.label}</span>
                 <strong>{metric.value}</strong>
               </motion.div>
@@ -539,35 +630,6 @@ function Hero() {
   );
 }
 
-function ProofStrip() {
-  const marqueeItems = [...skills, ...skills];
-
-  return (
-    <section className="relative overflow-hidden border-y border-white/8 bg-black/12 px-6 py-6 backdrop-blur-sm lg:px-10">
-      <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-        <div className="grid gap-4">
-          {signalStats.map((stat) => (
-            <div key={stat.label} className="signal-stat">
-              <span>{stat.label}</span>
-              <strong>{stat.value}</strong>
-            </div>
-          ))}
-        </div>
-        <div className="marquee-shell">
-          <div className="marquee-track">
-            {marqueeItems.map((skill, index) => (
-              <span key={`${skill}-${index}`} className="marquee-pill">
-                <Binary size={14} />
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function About() {
   return (
     <section id="about" className="px-6 py-24 lg:px-10" aria-labelledby="about-heading">
@@ -583,8 +645,8 @@ function About() {
             sectionId="about"
             index="01"
             kicker="About"
-            title="Backend-First, Product-Minded."
-            subtitle="I build software that removes manual work, handles sensitive data responsibly, and holds up in production."
+            title="How I Approach Work"
+            subtitle="This section is less about what I build and more about how I think about useful software in production."
           />
           <div className="feature-rail">
             <div className="feature-rail__line" />
@@ -609,6 +671,9 @@ function About() {
           <div className="about-grid">
             {highlights.map((highlight) => (
               <div key={highlight.title} className="about-card">
+                <div className="about-card__icon">
+                  <highlight.icon width={18} height={18} aria-hidden="true" />
+                </div>
                 <p className="about-card__kicker">{highlight.title}</p>
                 <p className="about-card__body">{highlight.detail}</p>
               </div>
@@ -620,14 +685,15 @@ function About() {
             <div className="mt-5 flex flex-wrap gap-3">
               {skills.map((skill, index) => (
                 <motion.span
-                  key={skill}
+                  key={skill.label}
                   className="stack-pill"
                   initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: (index % 8) * 0.04, ...transitionStagger }}
                 >
-                  {skill}
+                  <skill.icon size={16} style={{ color: skill.color }} aria-hidden="true" />
+                  {skill.label}
                 </motion.span>
               ))}
             </div>
@@ -654,7 +720,7 @@ function SignalLabSection() {
             index="02"
             kicker="Impact"
             title="What I Shipped."
-            subtitle="Switch between work snapshots to see the systems, outcomes, and technology patterns behind each role."
+            subtitle="Short snapshots from different environments, each with one clear problem and one clear result."
           />
         </motion.div>
         <motion.div
@@ -720,11 +786,16 @@ function ExperienceSection() {
                   ))}
                 </ul>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  {entry.focus.map((tag) => (
+                  {entry.focus.map((tag) => {
+                    const visual = getTagVisual(tag);
+                    const TagIcon = visual.icon;
+                    return (
                     <span key={tag} className="experience-tag">
+                      <TagIcon size={15} style={visual.color ? { color: visual.color } : undefined} aria-hidden="true" />
                       {tag}
                     </span>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </motion.article>
@@ -744,7 +815,7 @@ function FeaturedProjectSection() {
           index="04"
           kicker="Featured Project"
           title="Open-source highlight"
-          subtitle="Django, React, and OpenAI in a single shipped case study."
+          subtitle="A deeper look at one AI-focused project instead of another role summary."
         />
         <motion.a
           href={featuredProject.href}
@@ -796,17 +867,25 @@ function FeaturedProjectSection() {
             <div className="featured-project__stats">
               {featuredProject.stats.map((stat) => (
                 <div key={stat.label} className="featured-project__stat">
+                  <div className="featured-project__stat-icon">
+                    <stat.icon width={16} height={16} aria-hidden="true" />
+                  </div>
                   <span>{stat.label}</span>
                   <strong>{stat.value}</strong>
                 </div>
               ))}
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
-              {featuredProject.stack.map((item) => (
-                <span key={item} className="stack-pill">
-                  {item}
-                </span>
-              ))}
+              {featuredProject.stack.map((item) => {
+                const visual = getTagVisual(item);
+                const TagIcon = visual.icon;
+                return (
+                  <span key={item} className="stack-pill">
+                    <TagIcon size={16} style={visual.color ? { color: visual.color } : undefined} aria-hidden="true" />
+                    {item}
+                  </span>
+                );
+              })}
             </div>
           </div>
         </motion.a>
@@ -869,23 +948,22 @@ function ContactSection() {
             sectionId="contact"
             index="06"
             kicker="Contact"
-            title="Backend, Platforms, AI."
-            subtitle="I'm looking for roles where scalable systems, secure data handling, and useful automation matter in production."
+            title="Let’s Connect"
+            subtitle="If you are hiring for backend or platform work, this is the fastest way to reach me."
             className="max-w-2xl"
           />
           <div className="contact-console">
-            <div className="contact-console__row">
-              <span>Status</span>
-              <strong>Open to software engineering opportunities</strong>
-            </div>
-            <div className="contact-console__row">
-              <span>Preferred work</span>
-              <strong>Backend systems, product engineering, AI-assisted workflows</strong>
-            </div>
-            <div className="contact-console__row">
-              <span>Strengths</span>
-              <strong>Java, Spring Boot, Python, Django, AWS, secure platform design</strong>
-            </div>
+            {contactRows.map((row) => (
+              <div key={row.label} className="contact-console__row">
+                <div className="contact-console__row-icon">
+                  <row.icon width={17} height={17} aria-hidden="true" />
+                </div>
+                <div>
+                  <span>{row.label}</span>
+                  <strong>{row.value}</strong>
+                </div>
+              </div>
+            ))}
           </div>
         </motion.div>
 

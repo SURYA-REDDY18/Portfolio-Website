@@ -3,33 +3,33 @@ import { Activity, BadgeCheck, BrainCircuit, Database, Sparkles } from "lucide-r
 import { transitionStagger, transitionView } from "../motionPresets";
 
 const focusAreas = [
-  { label: "Fraud Detection", value: "Gemini", tone: "sand" },
-  { label: "Invoice Workflows", value: "40k+/mo", tone: "teal" },
-  { label: "Research Platforms", value: "HIPAA", tone: "clay" },
+  { label: "Fraud Checks", value: "Gemini", tone: "sand" },
+  { label: "Invoice Volume", value: "40k+/month", tone: "teal" },
+  { label: "Healthcare Work", value: "HIPAA-sensitive", tone: "clay" },
 ];
 
 const capabilities = [
   {
     icon: BrainCircuit,
-    title: "AI Where It Helps",
-    detail: "LLMs used for fraud scoring, OCR extraction, and root-cause reporting in real workflows.",
+    title: "Practical AI",
+    detail: "Used LLMs for fraud checks, OCR extraction, and RCA reporting where they improved real workflows.",
   },
   {
     icon: BadgeCheck,
-    title: "Secure by Design",
-    detail: "JWT auth, RBAC, and privacy-sensitive data handling for finance and healthcare systems.",
+    title: "Secure Systems",
+    detail: "Built with JWT, RBAC, and privacy-aware data handling for finance and healthcare use cases.",
   },
   {
     icon: Database,
-    title: "Systems That Ship",
-    detail: "Batch processing, document generation, and production workflows built around speed and reliability.",
+    title: "Production Delivery",
+    detail: "Shipped batch jobs, document workflows, and backend services designed for reliability at scale.",
   },
 ];
 
 const telemetry = [
   { label: "Backend", value: "Java, Spring Boot, Django" },
-  { label: "Cloud", value: "AWS, Docker, Kubernetes" },
-  { label: "Data", value: "Postgres, MySQL, MongoDB, Oracle" },
+  { label: "Cloud", value: "AWS, Docker" },
+  { label: "Data", value: "PostgreSQL, MongoDB" },
 ];
 
 export function HeroSignalPanel() {
@@ -141,29 +141,29 @@ export function HeroSignalPanel() {
         ))}
       </div>
 
-      <div className="signal-console">
-        <div className="signal-console__row">
-          <span className="signal-console__prompt">$ current_mode</span>
-          <span className="signal-console__value">backend systems for automation and secure data workflows</span>
-        </div>
-        <div className="signal-console__row">
-          <span className="signal-console__prompt">$ engineering_style</span>
-          <span className="signal-console__value">practical, secure, and production-oriented</span>
-        </div>
-      </div>
-
-      <div className="signal-telemetry">
-        {telemetry.map(({ label, value }) => (
-          <div key={label} className="signal-telemetry__item">
-            <span>{label}</span>
-            <strong>{value}</strong>
+        <div className="signal-console">
+          <div className="signal-console__row">
+            <span className="signal-console__prompt">$ current_mode</span>
+            <span className="signal-console__value">document workflows, fraud checks, and privacy-sensitive data pipelines</span>
           </div>
-        ))}
-        <div className="signal-telemetry__item signal-telemetry__item--accent">
-          <Database size={16} />
-          <strong>Current Focus: fraud checks, document automation, federated data systems</strong>
+          <div className="signal-console__row">
+            <span className="signal-console__prompt">$ engineering_style</span>
+            <span className="signal-console__value">measure impact, simplify the workflow, and ship something dependable</span>
+          </div>
         </div>
-      </div>
+
+        <div className="signal-telemetry">
+          {telemetry.map(({ label, value }) => (
+            <div key={label} className="signal-telemetry__item">
+              <span>{label}</span>
+              <strong>{value}</strong>
+            </div>
+          ))}
+          <div className="signal-telemetry__item signal-telemetry__item--accent">
+            <Database size={16} />
+            <strong>Current Focus: fraud checks, document automation, and secure data workflows</strong>
+          </div>
+        </div>
     </motion.div>
   );
 }
