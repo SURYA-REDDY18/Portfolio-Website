@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0a4b1f5b-3172-414d-bab3-cfb9ae78bcfa" name="Changes" comment="UI changes for the dicom deid tool">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Portfolio-Website.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/amrita-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/c-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/css-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/django-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/git-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/html-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/java-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/javascript-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/mongodb-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/mysql-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/nodejs-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/oracle-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/postgresql-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/python-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/react-logo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/react-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/sap-abap-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/logos/uic-logo.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SURYA-REDDY18&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SURYA-REDDY18/Portfolio-Website.git&quot;,
+    &quot;accountId&quot;: &quot;be716d46-c9ed-4fe2-92c2-a7eac5987acd&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2mFcXfJEkZ6rzZkcZ7L3kkDZnLM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/bmaha/OneDrive/Desktop/Portfolio website/Portfolio-Website&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\bmaha\OneDrive\Desktop\Portfolio website\Portfolio-Website\static" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.19072.16" />
+        <option value="bundled-python-sdk-8336bb23522e-2767605e8bc2-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.19072.16" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0a4b1f5b-3172-414d-bab3-cfb9ae78bcfa" name="Changes" comment="" />
+      <created>1726675806251</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726675806251</updated>
+      <workItem from="1726675807371" duration="8300000" />
+      <workItem from="1726712834521" duration="5525000" />
+    </task>
+    <task id="LOCAL-00001" summary="file refactoring">
+      <option name="closed" value="true" />
+      <created>1726675913682</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726675913682</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Skills section">
+      <option name="closed" value="true" />
+      <created>1726681394497</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726681394497</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Navbar highlighting">
+      <option name="closed" value="true" />
+      <created>1726713094057</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726713094057</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Education section update">
+      <option name="closed" value="true" />
+      <created>1726714537164</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726714537164</updated>
+    </task>
+    <task id="LOCAL-00005" summary="UI changes for the dicom deid tool">
+      <option name="closed" value="true" />
+      <created>1726796090954</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726796090954</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="file refactoring" />
+    <MESSAGE value="Skills section" />
+    <MESSAGE value="Navbar highlighting" />
+    <MESSAGE value="Education section update" />
+    <MESSAGE value="UI changes for the dicom deid tool" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI changes for the dicom deid tool" />
+  </component>
+</project>
