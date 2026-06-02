@@ -11,7 +11,6 @@ import {
   FileSearch,
   Github,
   GraduationCap,
-  KeyRound,
   Linkedin,
   Mail,
   MapPin,
@@ -33,8 +32,8 @@ import {
   SiDjango,
   SiGit,
   SiGooglegemini,
-  SiJsonwebtokens,
   SiMongodb,
+  SiNodedotjs,
   SiNumpy,
   SiOpenai,
   SiOpenjdk,
@@ -81,12 +80,12 @@ const skills: Skill[] = [
   { label: "Spring Boot", icon: SiSpringboot, color: "#6db33f" },
   { label: "Python", icon: SiPython, color: "#3776ab" },
   { label: "Django", icon: SiDjango, color: "#44b78b" },
+  { label: "Node.js", icon: SiNodedotjs, color: "#339933" },
   { label: "React", icon: SiReact, color: "#61dafb" },
   { label: "TypeScript", icon: SiTypescript, color: "#3178c6" },
   { label: "Docker", icon: SiDocker, color: "#2496ed" },
   { label: "PostgreSQL", icon: SiPostgresql, color: "#4169e1" },
   { label: "MongoDB", icon: SiMongodb, color: "#47a248" },
-  { label: "JWT", icon: SiJsonwebtokens, color: "#f97316" },
   { label: "OpenAI", icon: SiOpenai, color: "#ffffff" },
   { label: "Gemini", icon: SiGooglegemini, color: "#8ab4f8" },
   { label: "Pandas", icon: SiPandas, color: "#150458" },
@@ -97,14 +96,14 @@ const skills: Skill[] = [
 const heroMetrics: HeroMetric[] = [
   { label: "Current Role", value: "Software Engineer at Bectran", icon: BriefcaseBusiness },
   { label: "Based In", value: "Chicago, Illinois", icon: MapPin },
-  { label: "Focus", value: "Backend, AI workflows, secure systems", icon: BrainCircuit },
-  { label: "Experience", value: "3.5+ years across fintech and healthcare", icon: Clock3 },
+  { label: "Focus", value: "Distributed systems, LLM pipelines, AWS", icon: BrainCircuit },
+  { label: "Experience", value: "3+ years across fintech, healthcare, and enterprise", icon: Clock3 },
 ];
 
 const proofPoints = [
-  "40k+ invoices processed in monthly production workflows",
-  "90% reduction in financial-statement data entry through OCR",
-  "10k+ medical images prepared for privacy-sensitive research workflows",
+  "P95 latency reduced from 6s to 1.3s across high-traffic workflows",
+  "80% reduction in manual underwriting review with an LLM validation pipeline",
+  "500K+ invoices/month on a fault-tolerant delivery system with full audit logging",
 ];
 
 const experience = [
@@ -114,27 +113,29 @@ const experience = [
     period: "June 2025 - Present",
     location: "Schaumburg, IL",
     summary:
-      "Shipped AI-assisted financial workflows in Java and Spring Boot, combining LLMs, OCR, PDF generation, and batch systems for credit operations.",
+      "Building production distributed systems and LLM pipelines for credit operations, invoicing, and bureau monitoring in Java, Spring Boot, and AWS.",
     achievements: [
-      "Implemented Gemini-powered fraud detection that generates validation reports with fraud scores, summaries, and follow-up actions.",
-      "Engineered a Lob API mailing system for 40,000+ invoices per month with scheduled batches, S3-backed PDFs, webhook tracking, and configurable delivery frequency.",
-      "Built a financial statement OCR pipeline with Gemini that cut manual data entry time by 90%.",
+      "Proposed and engineered an end-to-end LLM document validation pipeline (Gemini, Java/Spring Boot, AWS) to cross-validate 10+ document types, cutting manual underwriting review time by 80%.",
+      "Reduced P95 latency from 6s to 1.3s by diagnosing ORM mapping bloat, adding targeted indexes, and refactoring hotspot query paths across high-traffic workflows.",
+      "Architected a fault-tolerant invoice delivery system (Spring Boot, ActiveMQ) processing 500K+ invoices/month with idempotent retry logic and full audit logging.",
+      "Designed and owned the architecture for a distributed credit bureau monitoring system across 10,000+ accounts and 5 bureaus with zero rate-limit breaches, using a custom two-tier batch scheduler.",
     ],
-    focus: ["Java", "Spring Boot", "AWS", "Gemini", "Batch Processing"],
+    focus: ["Java", "Spring Boot", "AWS", "Gemini", "ActiveMQ"],
   },
   {
     role: "Full Stack Developer",
     company: "University of Illinois Chicago",
-    period: "May 2024 - May 2025",
+    period: "October 2023 - May 2025",
     location: "Chicago, IL",
     summary:
-      "Built secure research infrastructure for confidential health data with Django, federated access patterns, custom permissions, and AWS deployment.",
+      "Delivered HIPAA-compliant research infrastructure with Django, PostgreSQL, React, and privacy-sensitive imaging workflows across multiple medical centers.",
     achievements: [
-      "Contributed to an NIH-funded, HIPAA-compliant platform for managing and analyzing patient health data.",
-      "Architected a federated system connecting 5 medical centers using JWT authentication, encrypted key exchange, and secure federated search, improving data accessibility by 70%.",
-      "Automated DICOM de-identification for 10,000+ medical images with pixel-level anonymization and metadata cleansing, increasing throughput by 70%.",
+      "Architected a HIPAA-compliant federated research platform (Django/PostgreSQL) across 5 medical centers, enabling unified cross-site queries and improving data accessibility by 70%.",
+      "Delivered a 3D brain model visualization pipeline (NiiVue.js) with a cron-based scheduler and real-time UI polling, rendering volumetric models in under 3 seconds.",
+      "Built a DICOM anonymization pipeline with pixel-level de-identification and per-tag metadata scrubbing, reducing manual effort by 90%.",
+      "Optimized a React dashboard with GridStack.js configurable widgets, resolving high-volume concurrent DB call bottlenecks via server-side filtering and pagination, accelerating researcher time-to-insight by 40%.",
     ],
-    focus: ["Django", "JWT", "RBAC", "AWS", "DICOM"],
+    focus: ["Django", "PostgreSQL", "React", "AWS", "DICOM"],
   },
   {
     role: "Software Engineer",
@@ -142,13 +143,13 @@ const experience = [
     period: "August 2021 - June 2023",
     location: "Hyderabad, India",
     summary:
-      "Improved enterprise delivery speed through reusable SAP tooling, Python data pipelines, and stronger validation coverage in production workflows.",
+      "Built high-throughput enterprise data integrations and validation layers between procurement and ERP systems with Python and Pandas.",
     achievements: [
-      "Created a reusable SAP framework that reduced repetitive ABAP coding by 90%.",
-      "Designed large-scale Python data pipelines with Pandas and NumPy, improving data quality by 60%.",
-      "Built unit and integration tests and analyzed production logs to resolve failures and improve delivery efficiency by 15%.",
+      "Engineered a high-throughput data integration pipeline syncing 200K+ supplier records/day between procurement and ERP systems, with schema transformation, dead-letter error routing, and retry logic.",
+      "Reduced data defect rate by 60% with Python/Pandas validation layers catching type mismatches, missing fields, and duplicates pre-ingestion.",
+      "Built a configuration-driven framework decoupling field governance from application code, cutting integration delivery time by 90%.",
     ],
-    focus: ["SAP ABAP", "Python", "Pandas", "NumPy", "Testing"],
+    focus: ["Python", "Pandas", "NumPy", "PostgreSQL", "Microservices"],
   },
 ];
 
@@ -158,46 +159,64 @@ const education = [
     degree: "Master of Science in Computer Science",
     period: "August 2023 - May 2025",
     detail: "GPA: 3.89/4.0",
-    note: "Coursework: Machine Learning on Graphs, NLP, Data Science, Deep Learning for Computer Vision, Big Data Mining, Distributed Systems.",
-  },
-  {
-    school: "Amrita Vishwa Vidyapeetham",
-    degree: "Bachelor of Technology in Electronics and Communication Engineering",
-    period: "July 2017 - June 2021",
-    detail: "GPA: 8.26/10.0",
-    note: "Coursework: Data Structures and Algorithms, Database Systems, Neural Networks, Software Engineering, Cloud Computing.",
+    note: "Chicago, IL. Focus areas include distributed systems, NLP, data science, and production software engineering.",
   },
 ];
 
 const highlights: Highlight[] = [
   {
     title: "How I Work",
-    detail: "I like backend problems tied to real operations, where reliability and clarity matter more than flashy demos.",
+    detail: "I focus on distributed systems and LLM pipelines where latency, reliability, and measurable operational impact matter in production.",
     icon: Workflow,
   },
   {
     title: "What Teams Get",
-    detail: "Cleaner workflows, less manual effort, and systems that are easier to trust once they hit production.",
+    detail: "Faster workflows, fewer manual reviews, and backend systems that hold up under real traffic and audit requirements.",
     icon: Shield,
   },
 ];
 
-const featuredProject = {
-  title: "AI-Powered Incident and Root Cause Analysis Platform",
-  description:
-    "A Django and React observability platform that turns service logs into structured, evidence-backed RCA reports with OpenAI.",
-  href: "https://github.com/SURYA-REDDY18",
-  stats: [
-    { label: "Triage time", value: "60% less manual triage", icon: Activity },
-    { label: "Report quality", value: "80% RCA accuracy", icon: ShieldCheck },
-    { label: "Evaluation set", value: "25+ simulated incidents", icon: Radar },
-  ],
-  stack: ["Django", "React", "OpenAI", "Log Analysis", "RCA Workflows"],
+type FeaturedProject = {
+  title: string;
+  description: string;
+  href: string;
+  stackLabel: string;
+  stats: { label: string; value: string; icon: UiIcon }[];
+  stack: string[];
 };
+
+const featuredProjects: FeaturedProject[] = [
+  {
+    title: "AI-Powered Incident and Root Cause Analysis Platform",
+    description:
+      "A Node.js observability platform with time-windowed log aggregation that correlates service failures and uses OpenAI to generate structured RCA reports with remediation steps.",
+    href: "https://github.com/SURYA-REDDY18",
+    stackLabel: "Node.js + OpenAI API",
+    stats: [
+      { label: "Triage time", value: "60% less manual triage", icon: Activity },
+      { label: "Correlation", value: "Grouped failures across services", icon: Radar },
+      { label: "Documentation", value: "Auto-generated RCA reports", icon: ShieldCheck },
+    ],
+    stack: ["Node.js", "OpenAI", "Log Analysis", "Distributed Systems"],
+  },
+  {
+    title: "RAG-Powered Document Intelligence System",
+    description:
+      "A FastAPI RAG pipeline over private document corpora using pgvector for semantic search and context-aware Q&A with chunking, re-ranking, and hallucination guardrails.",
+    href: "https://github.com/SURYA-REDDY18",
+    stackLabel: "Python + FastAPI + pgvector + Docker",
+    stats: [
+      { label: "Retrieval", value: "Sub-second semantic search", icon: Activity },
+      { label: "Accuracy", value: "40% fewer incorrect responses", icon: ShieldCheck },
+      { label: "Interface", value: "FastAPI REST with guardrails", icon: Radar },
+    ],
+    stack: ["Python", "PostgreSQL", "OpenAI", "Docker"],
+  },
+];
 
 const contactRows: ContactRow[] = [
   { label: "Status", value: "Open to software engineering opportunities", icon: BriefcaseBusiness },
-  { label: "Best Fit", value: "Backend and platform roles with meaningful product or operations impact", icon: Code2 },
+  { label: "Best Fit", value: "Backend, distributed systems, and LLM pipeline roles", icon: Code2 },
   { label: "Based In", value: "Chicago, Illinois", icon: MapPin },
 ];
 
@@ -210,14 +229,18 @@ const experienceTagIcons: Record<string, UiIcon | IconType> = {
   Pandas: SiPandas,
   NumPy: SiNumpy,
   Gemini: SiGooglegemini,
-  JWT: SiJsonwebtokens,
+  "Node.js": SiNodedotjs,
   AWS: Cloud,
-  "Batch Processing": Workflow,
-  "SAP ABAP": Code2,
-  Testing: ShieldCheck,
+  ActiveMQ: Workflow,
+  Microservices: Workflow,
   DICOM: FileSearch,
-  RBAC: KeyRound,
   Java: SiOpenjdk,
+  PostgreSQL: SiPostgresql,
+  React: SiReact,
+  OpenAI: SiOpenai,
+  Docker: SiDocker,
+  "Log Analysis": FileSearch,
+  "Distributed Systems": Radar,
 };
 
 function getTagVisual(tag: string): { icon: UiIcon | IconType; color?: string } {
@@ -260,7 +283,7 @@ const NAV_SECTIONS = [
   { id: "about", label: "About" },
   { id: "impact", label: "Impact" },
   { id: "experience", label: "Experience" },
-  { id: "project", label: "Project" },
+  { id: "project", label: "Projects" },
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ] as const;
@@ -781,13 +804,14 @@ function Hero() {
 
           <div className="space-y-6">
             <p className="max-w-xl text-sm uppercase tracking-[0.3em] text-[var(--color-clay)]">
-              Full Stack Developer working across fintech and healthcare
+              Software Engineer · distributed systems and LLM pipelines
             </p>
             <h1 className="max-w-4xl font-display text-5xl leading-[0.92] tracking-[-0.04em] text-white sm:text-6xl lg:text-8xl">
-              I build software that makes complex workflows simpler and more reliable.
+              I build production systems that cut latency, manual review, and operational risk.
             </h1>
             <p className="body-prose max-w-2xl text-lg">
-              3.5+ years of experience building backend workflows, document pipelines, and product systems used by real teams.
+              3+ years shipping distributed backends and LLM workflows across Java/Spring Boot, Python/Django, and AWS — from
+              500K+ invoices/month to HIPAA-compliant research platforms.
             </p>
           </div>
 
@@ -829,7 +853,7 @@ function Hero() {
               <Linkedin size={16} />
               LinkedIn
             </a>
-            <a href="mailto:nallamillisuryareddy18@gmail.com" className="social-chip">
+            <a href="mailto:suryareddynallamilli18@gmail.com" className="social-chip">
               <Mail size={16} />
               Email
             </a>
@@ -1030,82 +1054,91 @@ function FeaturedProjectSection() {
         <SectionHeading
           sectionId="project"
           index="04"
-          kicker="Featured Project"
-          title="Open-source highlight"
-          subtitle="A deeper look at one AI-focused project instead of another role summary."
+          kicker="Projects"
+          title="Open-source AI systems"
+          subtitle="Two projects focused on observability automation and private-document intelligence."
         />
-        <motion.a
-          href={featuredProject.href}
-          target="_blank"
-          rel="noreferrer"
-          className="featured-project"
-          initial={{ opacity: 0, y: 26 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.22 }}
-          transition={transitionView}
-          whileHover={{ y: -6, transition: { duration: 0.35, ease: transitionView.ease } }}
-        >
-          <div className="featured-project__media">
-            <div className="featured-project__visual">
-              <div className="featured-project__art">
-                <div className="featured-project__rings">
-                  <div className="featured-project__ring featured-project__ring--outer" />
-                  <div className="featured-project__ring featured-project__ring--middle" />
-                  <div className="featured-project__ring featured-project__ring--inner" />
-                  <div className="featured-project__beam" />
-                  <div className="featured-project__core">
-                    <Radar size={24} />
-                    <span>RCA</span>
+        <div className="mt-12 space-y-8">
+          {featuredProjects.map((project, index) => (
+            <motion.a
+              key={project.title}
+              href={project.href}
+              target="_blank"
+              rel="noreferrer"
+              className="featured-project"
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.22 }}
+              transition={{ ...transitionView, delay: index * 0.06 }}
+              whileHover={{ y: -6, transition: { duration: 0.35, ease: transitionView.ease } }}
+            >
+              <div className="featured-project__media">
+                <div className="featured-project__visual">
+                  <div className="featured-project__art">
+                    <div className="featured-project__rings">
+                      <div className="featured-project__ring featured-project__ring--outer" />
+                      <div className="featured-project__ring featured-project__ring--middle" />
+                      <div className="featured-project__ring featured-project__ring--inner" />
+                      <div className="featured-project__beam" />
+                      <div className="featured-project__core">
+                        <Radar size={24} />
+                        <span>{index === 0 ? "RCA" : "RAG"}</span>
+                      </div>
+                    </div>
+                    <div className="featured-project__floating featured-project__floating--top">
+                      <span>{index === 0 ? "Incident Signal" : "Document Query"}</span>
+                      <strong>
+                        {index === 0 ? "payments-api retry spike" : "semantic search over private corpora"}
+                      </strong>
+                    </div>
+                    <div className="featured-project__floating featured-project__floating--bottom">
+                      <ShieldCheck size={16} />
+                      <div>
+                        <span>{index === 0 ? "Structured Output" : "Retrieval Quality"}</span>
+                        <strong>
+                          {index === 0 ? "Evidence-backed remediation" : "Chunking, re-ranking, guardrails"}
+                        </strong>
+                      </div>
+                    </div>
+                    <div className="featured-project__glow featured-project__glow--teal" />
+                    <div className="featured-project__glow featured-project__glow--sand" />
                   </div>
                 </div>
-                <div className="featured-project__floating featured-project__floating--top">
-                  <span>Incident Signal</span>
-                  <strong>payments-api retry spike</strong>
-                </div>
-                <div className="featured-project__floating featured-project__floating--bottom">
-                  <ShieldCheck size={16} />
-                  <div>
-                    <span>Structured Output</span>
-                    <strong>Evidence-backed remediation</strong>
-                  </div>
-                </div>
-                <div className="featured-project__glow featured-project__glow--teal" />
-                <div className="featured-project__glow featured-project__glow--sand" />
               </div>
-            </div>
-          </div>
-          <div className="featured-project__content">
-            <p className="text-sm uppercase tracking-[0.24em] text-[var(--color-clay)]">Django + React + OpenAI</p>
-            <div className="mt-3 flex items-start justify-between gap-4">
-              <h3 className="font-display text-4xl leading-tight text-white">{featuredProject.title}</h3>
-              <ArrowUpRight size={20} className="mt-2 shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
-            </div>
-            <p className="body-prose body-prose--wide mt-5 text-lg">{featuredProject.description}</p>
-            <div className="featured-project__stats">
-              {featuredProject.stats.map((stat) => (
-                <div key={stat.label} className="featured-project__stat">
-                  <div className="featured-project__stat-icon">
-                    <stat.icon width={16} height={16} aria-hidden="true" />
-                  </div>
-                  <span>{stat.label}</span>
-                  <strong>{stat.value}</strong>
+              <div className="featured-project__content">
+                <p className="text-sm uppercase tracking-[0.24em] text-[var(--color-clay)]">{project.stackLabel}</p>
+                <div className="mt-3 flex items-start justify-between gap-4">
+                  <h3 className="font-display text-4xl leading-tight text-white">{project.title}</h3>
+                  <ArrowUpRight size={20} className="mt-2 shrink-0 text-[var(--color-text-muted)]" aria-hidden="true" />
                 </div>
-              ))}
-            </div>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {featuredProject.stack.map((item) => {
-                const visual = getTagVisual(item);
-                const TagIcon = visual.icon;
-                return (
-                  <span key={item} className="stack-pill">
-                    <TagIcon size={16} style={visual.color ? { color: visual.color } : undefined} aria-hidden="true" />
-                    {item}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        </motion.a>
+                <p className="body-prose body-prose--wide mt-5 text-lg">{project.description}</p>
+                <div className="featured-project__stats">
+                  {project.stats.map((stat) => (
+                    <div key={stat.label} className="featured-project__stat">
+                      <div className="featured-project__stat-icon">
+                        <stat.icon width={16} height={16} aria-hidden="true" />
+                      </div>
+                      <span>{stat.label}</span>
+                      <strong>{stat.value}</strong>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {project.stack.map((item) => {
+                    const visual = getTagVisual(item);
+                    const TagIcon = visual.icon;
+                    return (
+                      <span key={item} className="stack-pill">
+                        <TagIcon size={16} style={visual.color ? { color: visual.color } : undefined} aria-hidden="true" />
+                        {item}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1121,7 +1154,7 @@ function EducationSection() {
           kicker="Education"
           title="Degrees & coursework"
         />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-12 grid gap-6 md:grid-cols-1 lg:max-w-2xl">
           {education.map((entry, index) => (
             <motion.article
               key={entry.school}
@@ -1191,9 +1224,9 @@ function ContactSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ ...transitionView, delay: 0.08 }}
         >
-          <a href="mailto:nallamillisuryareddy18@gmail.com" className="contact-link">
+          <a href="mailto:suryareddynallamilli18@gmail.com" className="contact-link">
             <Mail size={18} />
-            <span className="contact-link__text">nallamillisuryareddy18@gmail.com</span>
+            <span className="contact-link__text">suryareddynallamilli18@gmail.com</span>
           </a>
           <a href="tel:+13125457413" className="contact-link">
             <Phone size={18} />
