@@ -3,33 +3,33 @@ import { Activity, BadgeCheck, BrainCircuit, Database, Sparkles } from "lucide-r
 import { transitionStagger, transitionView } from "../motionPresets";
 
 const focusAreas = [
-  { label: "Fraud Checks", value: "Gemini", tone: "sand" },
-  { label: "Invoice Volume", value: "40k+/month", tone: "teal" },
-  { label: "Healthcare Work", value: "HIPAA-sensitive", tone: "clay" },
+  { label: "LLM Pipelines", value: "80% less review", tone: "sand" },
+  { label: "Invoice Scale", value: "500K+/month", tone: "teal" },
+  { label: "Latency", value: "P95 6s → 1.3s", tone: "clay" },
 ];
 
 const capabilities = [
   {
     icon: BrainCircuit,
-    title: "Practical AI",
-    detail: "Used LLMs for fraud checks, OCR extraction, and RCA reporting where they improved real workflows.",
+    title: "LLM Systems",
+    detail: "Built document validation and RAG pipelines with measurable cuts to manual review and incorrect responses.",
   },
   {
     icon: BadgeCheck,
-    title: "Secure Systems",
-    detail: "Built with JWT, RBAC, and privacy-aware data handling for finance and healthcare use cases.",
+    title: "Distributed Systems",
+    detail: "Shipped fault-tolerant messaging, batch schedulers, and high-throughput integrations with idempotent retries.",
   },
   {
     icon: Database,
-    title: "Production Delivery",
-    detail: "Shipped batch jobs, document workflows, and backend services designed for reliability at scale.",
+    title: "Production Performance",
+    detail: "Diagnosed ORM bloat, added targeted indexes, and refactored hotspot queries across high-traffic workflows.",
   },
 ];
 
 const telemetry = [
-  { label: "Backend", value: "Java, Spring Boot, Django" },
-  { label: "Cloud", value: "AWS, Docker" },
-  { label: "Data", value: "PostgreSQL, MongoDB" },
+  { label: "Backend", value: "Java, Spring Boot, Django, FastAPI" },
+  { label: "Cloud", value: "AWS, Docker, Kubernetes, ActiveMQ" },
+  { label: "Data", value: "PostgreSQL, MySQL, MongoDB" },
 ];
 
 export function HeroSignalPanel() {
@@ -59,7 +59,7 @@ export function HeroSignalPanel() {
         </div>
         <div className="signal-panel__status">
           <span className="signal-panel__status-dot" />
-          Fintech + healthcare + AI
+          Distributed systems + LLM pipelines
         </div>
       </div>
 
@@ -84,7 +84,7 @@ export function HeroSignalPanel() {
             }
           />
           <div className="signal-radar__node signal-radar__node--top">
-            <span className="signal-radar__node-label">OCR</span>
+            <span className="signal-radar__node-label">LLM</span>
             <strong>Docs</strong>
           </div>
           <div className="signal-radar__node signal-radar__node--right">
@@ -144,7 +144,7 @@ export function HeroSignalPanel() {
         <div className="signal-console">
           <div className="signal-console__row">
             <span className="signal-console__prompt">$ current_mode</span>
-            <span className="signal-console__value">document workflows, fraud checks, and privacy-sensitive data pipelines</span>
+            <span className="signal-console__value">LLM validation, fault-tolerant invoicing, and federated healthcare data platforms</span>
           </div>
           <div className="signal-console__row">
             <span className="signal-console__prompt">$ engineering_style</span>
@@ -161,7 +161,7 @@ export function HeroSignalPanel() {
           ))}
           <div className="signal-telemetry__item signal-telemetry__item--accent">
             <Database size={16} />
-            <strong>Current Focus: fraud checks, document automation, and secure data workflows</strong>
+            <strong>Current Focus: LLM pipelines, latency optimization, and distributed production systems</strong>
           </div>
         </div>
     </motion.div>
